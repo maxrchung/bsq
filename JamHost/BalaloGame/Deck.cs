@@ -5,6 +5,10 @@ public class Deck
     private readonly List<Card> _baseCards = [];
     private Queue<int> _remaining = [];
 
+    public IReadOnlyList<Card> Cards => _baseCards;
+
+    public int Size => _baseCards.Count;
+
     public static Deck GenerateDefault()
     {
         var deck = new Deck();

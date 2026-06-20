@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bgkp7s3hosgxu"]
+
+[ext_resource type="Texture2D" uid="uid://mqookf8tkuem" path="res://mj/card_sheet.png" id="1_52ff7"]
+[ext_resource type="Script" uid="uid://d0a4535fu80b6" path="res://objects/playing_card.gd" id="1_yy2wv"]
+[ext_resource type="Shader" uid="uid://bwot8tj4lkfow" path="res://objects/shaders/card_basic.gdshader" id="2_sb5rw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fu00b"]
+shader = ExtResource("2_sb5rw")
+shader_parameter/SPEED = 1.5
+shader_parameter/AMPLITUDE = 3.0
+
+[node name="PlayingCard" type="Node2D" unique_id=592686736]
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_fu00b")
+script = ExtResource("1_yy2wv")
+
+[node name="BackTexture" type="Sprite2D" parent="." unique_id=440821426]
+use_parent_material = true
+texture = ExtResource("1_52ff7")
+region_enabled = true
+region_rect = Rect2(0, 0, 250, 350)
+
+[node name="FaceTexture" type="Sprite2D" parent="." unique_id=926492]
+use_parent_material = true
+texture = ExtResource("1_52ff7")
+region_enabled = true
+region_rect = Rect2(500, 0, 250, 350)
+
+[node name="BorderTexture" type="Sprite2D" parent="." unique_id=437681185]
+use_parent_material = true
+region_enabled = true
+region_rect = Rect2(13750, 0, 250, 350)

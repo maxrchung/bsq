@@ -1,15 +1,11 @@
 using System.Text.Json;
 using JamServer.Controllers;
-using JamServer.Game;
 using JamServer.Lobby;
-using JamServer.Models;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, JamJsonContext.Default);
-    options.SerializerOptions.TypeInfoResolverChain.Insert(0, GameJsonContext.Default);
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 });
 

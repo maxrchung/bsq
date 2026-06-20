@@ -1,13 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
-using JamServer.Models;
 
 namespace JamServer.Lobby;
+
+public record LobbyListEntry(Guid Id, string Name);
 
 public class LobbyCoordinator
 {
     private readonly ILogger<LobbyCoordinator> _logger;
     private readonly Dictionary<Guid, GameLobby> _lobbies = new();
-    private readonly Dictionary<Guid, GameLobby> _playerKeys = new();
 
     public LobbyCoordinator(ILogger<LobbyCoordinator> logger)
     {
@@ -15,7 +15,7 @@ public class LobbyCoordinator
         _logger.LogInformation("Lobby coordinator started");
 
         // DEBUG
-        CreateLobby("hi");
+        CreateLobby("hi :)");
     }
 
     public bool TryFindLobby(Guid id, [MaybeNullWhen(false)] out GameLobby lobby) =>
@@ -24,10 +24,10 @@ public class LobbyCoordinator
     public GameLobby CreateLobby(string name)
     {
         var id = Guid.NewGuid();
-        var lobby = new GameLobby(this, id, name);
+        var lobby = new GameLobby(name, id);
         _lobbies.Add(id, lobby);
         return lobby;
     }
 
-    public IEnumerable<LobbyInfo> GetLobbies() => _lobbies.Select(x => x.Value.Info);
+    public IEnumerable<LobbyListEntry> GetLobbies() => _lobbies.Select(x => new LobbyListEntry(x.Key, x.Value.Name));
 }

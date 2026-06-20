@@ -9,7 +9,7 @@ public class PlayerChannel : IRpcListener
     private readonly LobbyCoordinator _coordinator;
     private readonly RpcPipe _pipe;
     private string _name = "Player";
-    private LobbyPlayer? _lobbyPlayer = null;
+    private GameLobbyPlayer? _lobbyPlayer = null;
 
     public string Name => _name;
 
