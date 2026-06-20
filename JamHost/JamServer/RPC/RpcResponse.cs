@@ -57,6 +57,16 @@ public record EmergencyMeetingInfo
     public required IReadOnlyList<Guid> VotesAgainst { get; init; } = [];
 }
 
+public record RoundInfo {
+    public required bool RoundNumber { get; init; }
+    public required LobbyPlayer ActivePlayer { get; init; }
+}
+
+public record GameState {
+    public required RoundInfo CurrentRound { get; init; }
+    public 
+}
+
 public record RpcResponse
 {
     public required int Id { get; init; }
