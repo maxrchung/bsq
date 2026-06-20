@@ -112,19 +112,19 @@ public class GameLobby
     public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid) {
         var bid = new List<Card>();
         foreach (Dictionary<string, string> raw_card in raw_bid) {
-            foreach (var (suit, value) in myDict)
+            foreach (var (suit, value) in raw_card)
             {
                 Enum.TryParse<CardSuit>(suit, true, out CardSuit card_suit);
-                Enum.TryParse<CardValue>(value, true, out CardSuit card_value);
+                Enum.TryParse<CardValue>(value, true, out CardValue card_value);
                 var new_card = new Card(card_value, card_suit);
                 bid.Add(new_card);
             }
         }
         if (_board.ValidateBid(bid)) {
-            _board.setBid(bid);
+            _board.SetBid(bid);
             return true;
         }
-        return false
+        return false;
     }
 
     public async Task UpdateDeck()

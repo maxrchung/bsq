@@ -83,9 +83,11 @@ public class PlayerChannel : IRpcListener
 
     public async ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards) {
         var lobby = _lobbyPlayer.Lobby;
-        if (!lobby.ValidateBid(bid)) {
+        var validated = await lobby.ValidateBid(cards);
+        if (!validated) {
             return new OkResponse { Message = "Invalid bid" };
         }
+        return new OkResponse{ Message = "Valid bid" };
     }
 
     public async ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type)
