@@ -29,5 +29,6 @@ region_rect = Rect2(500, 0, 250, 350)
 
 [node name="BorderTexture" type="Sprite2D" parent="." unique_id=437681185]
 use_parent_material = true
+texture = ExtResource("1_52ff7")
 region_enabled = true
 region_rect = Rect2(13750, 0, 250, 350)

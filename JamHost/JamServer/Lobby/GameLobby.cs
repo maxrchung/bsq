@@ -10,6 +10,30 @@ public class GameLobbyPlayer
     public required PlayerChannel Channel { get; init; }
 
     public required GamePlayer GamePlayer { get; init; }
+
+    public required GameLobby Lobby { get; init; }
+}
+
+public record EmergencyMeetingState
+{
+    public bool IsActive { get; set; } = false;
+
+    public void Start()
+    {
+        IsActive = true;
+        VotesFor.Clear();
+        VotesAgainst.Clear();
+    }
+
+    public List<GameLobbyPlayer> VotesFor { get; init; } = [];
+    public List<GameLobbyPlayer> VotesAgainst { get; init; } = [];
+
+    public EmergencyMeetingInfo ToRpc() => new()
+    {
+        IsActive = IsActive,
+        VotesFor = VotesFor.Select(x => x.Id).ToList(),
+        VotesAgainst = VotesAgainst.Select(x => x.Id).ToList(),
+    };
 }
 
 public class GameLobby
@@ -20,6 +44,8 @@ public class GameLobby
 
     public readonly string Name;
     public readonly Guid Id;
+
+    private readonly EmergencyMeetingState _emergencyMeeting = new();
 
     public GameLobby(string name, Guid id)
     {
@@ -47,12 +73,12 @@ public class GameLobby
         await InvokeAll(msg);
     }
 
-    private DeckInfo DeckToRpc() => new DeckInfo
+    private DeckInfo DeckToRpc() => new()
     {
         Cards = _board.Cards.Select(CardInfo.From).ToList()
     };
 
-    private bool RevealHandTo(GameLobbyPlayer observer, GameLobbyPlayer target) => observer.Id == target.Id;
+    private bool ShouldRevealHandTo(GameLobbyPlayer observer, GameLobbyPlayer target) => observer.Id == target.Id;
 
     public IReadOnlyList<PlayerHandInfo> HandInfoFor(GameLobbyPlayer player)
     {
@@ -60,7 +86,7 @@ public class GameLobby
         {
             Id = x.Id,
             CardCount = x.GamePlayer.HandSize,
-            Cards = RevealHandTo(player, x)
+            Cards = ShouldRevealHandTo(player, x)
                 ? x.GamePlayer.HandCards.Select(CardInfo.From).ToList()
                 : null
         }).ToList();
@@ -88,6 +114,36 @@ public class GameLobby
         await InvokeAll(new RpcResponse { Id = 0, Deck = DeckToRpc() });
     }
 
+    private async Task BroadcastMeeting()
+    {
+        await InvokeAll(new RpcResponse { Id = 0, EmergencyMeeting = _emergencyMeeting.ToRpc() });
+    }
+
+    public async Task InvokeCtl(GameLobbyPlayer player, InvokeCtlType type)
+    {
+        if (type == InvokeCtlType.StartGame)
+        {
+            await UpdateDeck();
+            await NextRound();
+        }
+        else if (type == InvokeCtlType.EmergencyMeetingVoteFor)
+        {
+            if (!_emergencyMeeting.IsActive) return;
+            _emergencyMeeting.VotesFor.Add(player);
+            await BroadcastMeeting();
+        }
+        else if (type == InvokeCtlType.EmergencyMeetingVoteAgainst)
+        {
+            if (!_emergencyMeeting.IsActive)
+            {
+                _emergencyMeeting.Start();
+            }
+
+            _emergencyMeeting.VotesAgainst.Add(player);
+            await BroadcastMeeting();
+        }
+    }
+
     public async ValueTask<GameLobbyPlayer> BindPlayer(string name, PlayerChannel channel)
     {
         var player = new GameLobbyPlayer
@@ -95,7 +151,8 @@ public class GameLobby
             Id = Guid.NewGuid(),
             Name = name,
             Channel = channel,
-            GamePlayer = _board.AddPlayer()
+            GamePlayer = _board.AddPlayer(),
+            Lobby = this,
         };
         _players.Add(player);
         await channel.Send(new RpcResponse
