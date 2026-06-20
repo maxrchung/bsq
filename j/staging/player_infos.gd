@@ -11,7 +11,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-func update_players(player_hands):
+func update_players(player_hands, my_player_id):
 	# Clear existing
 	for child in get_children():
 		child.queue_free()
@@ -19,7 +19,11 @@ func update_players(player_hands):
 	for i in player_hands.size():
 		var player_hand = player_hands[i]
 		var player_info = player_info_scene.instantiate()
-		player_info.player_name = player_hand.id
+		
+		if player_hand.id == my_player_id:
+			player_info.player_name = '(You) ' + player_hand.id
+		else:
+			player_info.player_name = player_hand.id
 		player_info.card_count = player_hand.cardCount
 		player_info.position = Vector2(0, i * 50)
 		add_child(player_info)

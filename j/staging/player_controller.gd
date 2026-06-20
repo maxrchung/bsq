@@ -28,7 +28,7 @@ func _ready() -> void:
 	joinButton.pressed.connect(_do_join)
 
 func _on_connect_button_pressed() -> void:
-	var host = $"../ConnectText".text
+	var host = $"../LobbyStuff/ConnectText".text
 	socket.connect_to_url("ws://" + host + ":5092/api/v1/game/socket")
 	is_connected = true
 
@@ -42,6 +42,20 @@ func _do_join() -> void:
 	var lobbyId = itemMap[lobbyList.get_selected_items()[0]]
 	print("joining ", lobbyId, " as ", name)
 	_invoke("join", {"lobbyId": lobbyId, "playerName": name})
+	$"../LobbyStuff".visible = false
+	
+	$"../LobbyIdText".visible = true
+	$"../PlayerIdText".visible = true
+	$"../PlayerInfos".visible = true
+	$"../Hand".visible = true
+	$"../StartButton".visible = true
+	
+	$"../EmergencyMeetingButton".visible = true
+	$"../VoteForButton".visible = true
+	$"../VoteAgainstButton".visible = true
+	
+	$"../BidMpregs".visible = true
+	$"../BidButton".visible = true
 
 func _handle_rsp(text: String) -> void:
 	var err = json.parse(text)
@@ -66,7 +80,7 @@ func _handle_rsp(text: String) -> void:
 		
 	if "playerHands" in d:
 		playerHands = d.playerHands
-		$"../PlayerInfos".update_players(playerHands)
+		$"../PlayerInfos".update_players(playerHands, myPlayerId)
 		
 		for playerHand in playerHands:
 			if myPlayerId == playerHand.id:

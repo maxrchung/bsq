@@ -11,24 +11,26 @@
 
 [node name="PlayerController" type="Node" parent="." unique_id=1044269277 node_paths=PackedStringArray("nameField", "joinButton", "lobbyList")]
 script = ExtResource("1_ru61t")
-nameField = NodePath("../LineEdit")
-joinButton = NodePath("../Button")
-lobbyList = NodePath("../ItemList")
+nameField = NodePath("../LobbyStuff/LineEdit")
+joinButton = NodePath("../LobbyStuff/Button")
+lobbyList = NodePath("../LobbyStuff/ItemList")
 
-[node name="LineEdit" type="LineEdit" parent="." unique_id=437873862]
+[node name="LobbyStuff" type="Node2D" parent="." unique_id=2135225762]
+
+[node name="LineEdit" type="LineEdit" parent="LobbyStuff" unique_id=437873862]
 offset_left = 13.0
 offset_top = 213.0
 offset_right = 149.0
 offset_bottom = 244.0
 placeholder_text = "player name"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1498088175]
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyStuff" unique_id=1498088175]
 offset_left = 176.0
 offset_top = 116.0
 offset_right = 386.0
 offset_bottom = 255.0
 
-[node name="Button" type="Button" parent="." unique_id=1572874277]
+[node name="Button" type="Button" parent="LobbyStuff" unique_id=1572874277]
 offset_left = 161.0
 offset_top = 213.0
 offset_right = 244.0
@@ -36,11 +38,26 @@ offset_bottom = 244.0
 text = "join
 "
 
-[node name="ItemList" type="ItemList" parent="." unique_id=810656343]
+[node name="ItemList" type="ItemList" parent="LobbyStuff" unique_id=810656343]
 offset_left = 9.0
 offset_top = 54.0
 offset_right = 366.0
 offset_bottom = 209.0
+
+[node name="ConnectButton" type="Button" parent="LobbyStuff" unique_id=1155131296]
+offset_left = 244.0
+offset_top = 12.0
+offset_right = 316.0
+offset_bottom = 43.0
+text = "Connect"
+
+[node name="ConnectText" type="TextEdit" parent="LobbyStuff" unique_id=332784921]
+offset_left = 13.0
+offset_top = 12.0
+offset_right = 230.0
+offset_bottom = 47.0
+text = "localhost"
+placeholder_text = "localhost"
 
 [node name="PlayingCard" parent="." unique_id=592686736 instance=ExtResource("2_fu00b")]
 visible = false
@@ -66,34 +83,40 @@ offset_bottom = 54.0
 text = "Send Json Request"
 
 [node name="LobbyIdText" type="Label" parent="." unique_id=1002534460]
-offset_left = 13.0
-offset_top = 255.0
-offset_right = 65.0
-offset_bottom = 278.0
+visible = false
+offset_left = 9.0
+offset_top = 12.0
+offset_right = 61.0
+offset_bottom = 35.0
 text = "Lobby:"
 
 [node name="PlayerIdText" type="Label" parent="." unique_id=1173182417]
-offset_left = 13.0
-offset_top = 278.0
-offset_right = 66.0
-offset_bottom = 301.0
+visible = false
+offset_left = 9.0
+offset_top = 35.0
+offset_right = 62.0
+offset_bottom = 58.0
 text = "Player:"
 
 [node name="StartButton" type="Button" parent="." unique_id=1283160164]
-offset_left = 13.0
-offset_top = 310.0
-offset_right = 119.0
-offset_bottom = 341.0
+visible = false
+offset_left = 9.0
+offset_top = 67.0
+offset_right = 115.0
+offset_bottom = 98.0
 text = "START GAME"
 
 [node name="PlayerInfos" type="Node2D" parent="." unique_id=1647946707]
-position = Vector2(13, 365)
+visible = false
+position = Vector2(9, 116)
 script = ExtResource("3_8y7d7")
 player_info_scene = ExtResource("4_6rarn")
 
 [node name="Hand" parent="." unique_id=1932947453 instance=ExtResource("5_jkla0")]
+visible = false
 
 [node name="EmergencyMeetingButton" type="Button" parent="." unique_id=1588457483]
+visible = false
 offset_left = 18.0
 offset_top = 572.0
 offset_right = 179.0
@@ -101,6 +124,7 @@ offset_bottom = 603.0
 text = "Emergency meeting"
 
 [node name="VoteForButton" type="Button" parent="." unique_id=1663568444]
+visible = false
 offset_left = 18.0
 offset_top = 610.0
 offset_right = 88.0
@@ -108,41 +132,29 @@ offset_bottom = 641.0
 text = "Vote for"
 
 [node name="VoteAgainstButton" type="Button" parent="." unique_id=1505338994]
+visible = false
 offset_left = 96.0
 offset_top = 610.0
 offset_right = 251.0
 offset_bottom = 641.0
 text = "Vote against"
 
-[node name="ConnectButton" type="Button" parent="." unique_id=1155131296]
-offset_left = 244.0
-offset_top = 12.0
-offset_right = 316.0
-offset_bottom = 43.0
-text = "Connect"
-
-[node name="ConnectText" type="TextEdit" parent="." unique_id=332784921]
-offset_left = 13.0
-offset_top = 12.0
-offset_right = 230.0
-offset_bottom = 47.0
-text = "localhost"
-placeholder_text = "localhost"
+[node name="BidMpregs" parent="." unique_id=176062230 instance=ExtResource("6_nh24k")]
+visible = false
+position = Vector2(453, 255)
 
 [node name="BidButton" type="Button" parent="." unique_id=1883378963]
-offset_left = 538.0
-offset_top = 388.0
-offset_right = 630.0
-offset_bottom = 419.0
+visible = false
+offset_left = 453.0
+offset_top = 333.0
+offset_right = 545.0
+offset_bottom = 364.0
 text = "Submit bid"
 
-[node name="BidMpregs" parent="." unique_id=176062230 instance=ExtResource("6_nh24k")]
-position = Vector2(538, 310)
-
+[connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]
 [connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
 [connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]
 [connection signal="pressed" from="EmergencyMeetingButton" to="PlayerController" method="_on_emergency_meeting_button_pressed"]
 [connection signal="pressed" from="VoteForButton" to="PlayerController" method="_on_vote_for_button_pressed"]
 [connection signal="pressed" from="VoteAgainstButton" to="PlayerController" method="_on_vote_against_button_pressed"]
-[connection signal="pressed" from="ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]
 [connection signal="pressed" from="BidButton" to="PlayerController" method="_on_bid_button_pressed"]
