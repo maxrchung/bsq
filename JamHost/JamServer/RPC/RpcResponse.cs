@@ -50,6 +50,13 @@ public record PlayerHandInfo
     public IReadOnlyList<CardInfo>? Cards { get; init; }
 }
 
+public record EmergencyMeetingInfo
+{
+    public required bool IsActive { get; init; }
+    public required IReadOnlyList<Guid> VotesFor { get; init; } = [];
+    public required IReadOnlyList<Guid> VotesAgainst { get; init; } = [];
+}
+
 public record RpcResponse
 {
     public required int Id { get; init; }
@@ -65,6 +72,8 @@ public record RpcResponse
     public IReadOnlyList<PlayerHandInfo>? PlayerHands { get; set; }
 
     public Guid? LocalIdChange { get; set; }
+
+    public EmergencyMeetingInfo? EmergencyMeeting { get; set; }
 
     public string? Error { get; set; }
 }

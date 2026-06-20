@@ -81,6 +81,19 @@ public class PlayerChannel : IRpcListener
         return new OkResponse { Message = "joined" };
     }
 
+    public async ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type)
+    {
+        if (_lobbyPlayer == null)
+        {
+            throw new Exception("Not in lobby");
+        }
+
+        var lobby = _lobbyPlayer.Lobby;
+        await lobby.InvokeCtl(_lobbyPlayer, type);
+
+        return new OkResponse { Message = "ok" };
+    }
+
     public void OnError(Exception e)
     {
         _logger.LogError(e, "Error in player channel");

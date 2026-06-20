@@ -17,6 +17,8 @@ public interface IRpcListener
 
     public ValueTask<OkResponse> JoinLobbyAsync(Guid lobbyId, string playerName);
 
+    public ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type);
+
     public void OnError(Exception e);
 }
 
@@ -46,10 +48,6 @@ public class RpcPipe
         {
             rsp.Ok = await _server.JoinLobbyAsync(req.Join.LobbyId, req.Join.PlayerName);
         }
-        else if (req.GetPlayerHands != null)
-        {
-            rsp.PlayerHands = await _server.GetPlayerHandsAsync(req.GetPlayerHands.LobbyId, req.GetPlayerHands.PlayerId);
-        }
         else if (req.GetInfo != null)
         {
             if (req.GetInfo == GetInfoType.Lobbies)
@@ -60,6 +58,10 @@ public class RpcPipe
             {
                 rsp.Error = "unknown info type";
             }
+        }
+        else if (req.InvokeCtl.HasValue)
+        {
+            rsp.Ok = await _server.InvokeCtlAsync(req.InvokeCtl.Value);
         }
         else
         {
