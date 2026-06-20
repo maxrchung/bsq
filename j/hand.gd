@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 func update_cards(cards):
 	# Remove old
 	for child in get_children():
-		if child is Card:
+		if child is PlayingCard:
 			child.queue_free()
 		
 	var count = cards.size()
@@ -34,8 +34,39 @@ func update_cards(cards):
 	
 	for i in count:
 		var card = card_scene.instantiate()
-		card.suit = cards[i]["suit"]
-		card.number = cards[i]["number"]
+		card.suit = PlayingCard.Suit[cards[i]["suit"]]
+		
+		var value = cards[i]["value"]
+		var number = 2;
+		
+		if value == "Two":
+			number = 2
+		elif value == "Three":
+			number = 3
+		elif value == "Four":
+			number = 4
+		elif value == "Five":
+			number = 5
+		elif value == "Six":
+			number = 6
+		elif value == "Seven":
+			number = 7
+		elif value == "Eight":
+			number = 8
+		elif value == "Nine":
+			number = 9
+		elif value == "Ten":
+			number = 10
+		elif value == "Jack":
+			number = 11
+		elif value == "Queen":
+			number = 12
+		elif value == "King":
+			number = 13
+		elif value == "Ace":
+			number = 14
+		
+		card.number = number
 		card.position = Vector2(
 			left + i * 50,
 			screen_size.y
@@ -55,10 +86,10 @@ func randomize_cards():
 	for i in count:
 		cards[i] = {
 			"suit": [
-				'spade',
-				'heart',
-				'clover',
-				'diamond',
+				PlayingCard.Suit.Spade,
+				PlayingCard.Suit.Heart,
+				PlayingCard.Suit.Club,
+				PlayingCard.Suit.Diamond,
 			].pick_random(),
 			"number": randi_range(2, 14)
 		}

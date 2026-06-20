@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://bg6hoi1sxwl2v"]
 
 [ext_resource type="Script" uid="uid://ck4qjfmno4tqo" path="res://hand.gd" id="1_u4p2i"]
-[ext_resource type="PackedScene" uid="uid://dmxrpya7jf6at" path="res://card.tscn" id="2_bfasp"]
+[ext_resource type="PackedScene" uid="uid://bgkp7s3hosgxu" path="res://objects/playing_card.tscn" id="2_bfasp"]
 
 [node name="Hand" type="Node2D" unique_id=1932947453]
 script = ExtResource("1_u4p2i")
 card_scene = ExtResource("2_bfasp")
 
 [node name="RandomizeButton" type="Button" parent="." unique_id=327546645]
+visible = false
 offset_left = 18.0
 offset_top = 12.0
 offset_right = 113.0

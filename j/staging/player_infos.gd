@@ -11,7 +11,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
 func update_players(player_hands):
 	# Clear existing
 	for child in get_children():

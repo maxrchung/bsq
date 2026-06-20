@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name PlayingCard
+
 enum Suit {
 	Spade,
 	Heart,

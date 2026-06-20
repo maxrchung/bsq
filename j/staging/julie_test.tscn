@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bgkp7s3hosgxu" path="res://objects/playing_card.tscn" id="2_fu00b"]
 [ext_resource type="Script" uid="uid://bbeffmus5r6m1" path="res://staging/player_infos.gd" id="3_8y7d7"]
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
+[ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
 
 [node name="Node2D" type="Node2D" unique_id=866605961]
 
@@ -87,6 +88,8 @@ text = "START GAME"
 position = Vector2(9, 309)
 script = ExtResource("3_8y7d7")
 player_info_scene = ExtResource("4_6rarn")
+
+[node name="Hand" parent="." unique_id=1932947453 instance=ExtResource("5_jkla0")]
 
 [connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
 [connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]

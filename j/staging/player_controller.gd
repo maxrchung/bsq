@@ -62,9 +62,11 @@ func _handle_rsp(text: String) -> void:
 		
 	if "playerHands" in d:
 		playerHands = d.playerHands
-		
 		$"../PlayerInfos".update_players(playerHands)
-
+		
+		for playerHand in playerHands:
+			if myPlayerId == playerHand.id:
+				$"../Hand".update_cards(playerHand.cards)
 
 func _process_socket() -> void:
 	if clientState == ClientState.Failed: return
