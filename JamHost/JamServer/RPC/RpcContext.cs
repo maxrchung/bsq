@@ -10,7 +10,8 @@ namespace JamServer.RPC;
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     UseStringEnumConverter = true,
     IncludeFields = true,
-    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+    AllowTrailingCommas = true
 )]
 internal partial class RpcJsonContext : JsonSerializerContext
 {

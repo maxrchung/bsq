@@ -69,3 +69,8 @@ func _process_socket() -> void:
 func _process(_delta: float) -> void:
 	_process_socket()
 	pass
+
+
+func _on_send_json_button_pressed() -> void:
+	var text = $"../SendJsonText".text
+	socket.send_text(text)

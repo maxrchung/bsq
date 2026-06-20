@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -33,6 +34,7 @@ public class RpcPipe
     private async ValueTask<RpcResponse> Invoke(RpcRequest req)
     {
         var rsp = new RpcResponse { Id = req.Id };
+
         if (req.Connect != null)
         {
             rsp.Ok = await _server.ConnectAsync(req.Connect);
@@ -69,6 +71,7 @@ public class RpcPipe
     private async Task HandleRecv(string data)
     {
         var id = -1;
+
         try
         {
             var req = JsonSerializer.Deserialize<RpcRequest>(data, RpcJsonContext.Default.RpcRequest)!;

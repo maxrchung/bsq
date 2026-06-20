@@ -42,3 +42,22 @@ offset_bottom = 230.0
 position = Vector2(578, 277)
 suit = 2
 number = 7
+
+[node name="SendJsonText" type="TextEdit" parent="." unique_id=1619381570]
+offset_left = 751.0
+offset_top = 49.0
+offset_right = 963.0
+offset_bottom = 234.0
+text = "{
+\"getInfo\": \"lobbies\",
+\"id\":0
+}"
+
+[node name="SendJsonButton" type="Button" parent="." unique_id=2004457102]
+offset_left = 979.0
+offset_top = 53.0
+offset_right = 1129.0
+offset_bottom = 94.0
+text = "Send Json Request"
+
+[connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]

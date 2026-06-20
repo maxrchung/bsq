@@ -15,3 +15,32 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Build outputs
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+packages/
+
+# Dotnet
+*.dll
+*.pdb
+*.cache
+
+# Publish output
+publish/
