@@ -39,6 +39,30 @@ public class PlayerChannel : IRpcListener
             .Select(x => new LobbyListEntry(x.Id, x.Name)).ToList());
     }
 
+    public ValueTask<IReadOnlyList<PlayerHandInfo>> GetPlayerHandsAsync(Guid lobbyId, Guid playerId)
+    {
+        if (!_coordinator.TryFindLobby(lobbyId, out var lobby))
+        {
+            throw new Exception("Lobby not found");
+        }
+
+        var players = lobby.GetPlayers();
+        var player = players.Find(p => p.Id == playerId);
+
+        if (player == null)
+        {
+            throw new Exception("Player not found");
+        }
+
+        var hands = lobby.HandInfoFor(player);
+        if (hands == null)
+        {
+            throw new Exception("Hands not found");
+        }
+
+        return ValueTask.FromResult(hands);
+    }
+
 
     public async ValueTask<OkResponse> JoinLobbyAsync(Guid lobbyId, string playerName)
     {

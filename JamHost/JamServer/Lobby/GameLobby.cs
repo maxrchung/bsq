@@ -54,7 +54,7 @@ public class GameLobby
 
     private bool RevealHandTo(GameLobbyPlayer observer, GameLobbyPlayer target) => observer.Id == target.Id;
 
-    private IReadOnlyList<PlayerHandInfo> HandInfoFor(GameLobbyPlayer player)
+    public IReadOnlyList<PlayerHandInfo> HandInfoFor(GameLobbyPlayer player)
     {
         return _players.Select(x => new PlayerHandInfo
         {
@@ -64,6 +64,11 @@ public class GameLobby
                 ? x.GamePlayer.HandCards.Select(CardInfo.From).ToList()
                 : null
         }).ToList();
+    }
+
+    public List<GameLobbyPlayer> GetPlayers()
+    {
+        return _players;
     }
 
     private async Task UpdateHands()

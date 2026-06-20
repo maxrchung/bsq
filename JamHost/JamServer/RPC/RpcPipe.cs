@@ -13,6 +13,8 @@ public interface IRpcListener
 
     public ValueTask<IReadOnlyList<LobbyListEntry>> GetLobbyListAsync();
 
+    public ValueTask<IReadOnlyList<PlayerHandInfo>> GetPlayerHandsAsync(Guid lobbyId, Guid playerId);
+
     public ValueTask<OkResponse> JoinLobbyAsync(Guid lobbyId, string playerName);
 
     public void OnError(Exception e);
@@ -43,6 +45,10 @@ public class RpcPipe
         else if (req.Join != null)
         {
             rsp.Ok = await _server.JoinLobbyAsync(req.Join.LobbyId, req.Join.PlayerName);
+        }
+        else if (req.GetPlayerHands != null)
+        {
+            rsp.PlayerHands = await _server.GetPlayerHandsAsync(req.GetPlayerHands.LobbyId, req.GetPlayerHands.PlayerId);
         }
         else if (req.GetInfo != null)
         {

@@ -16,6 +16,13 @@ public record JoinRequest
     public required string PlayerName { get; init; }
 }
 
+public record GetPlayerHandsRequest
+{
+    public required Guid LobbyId { get; init; }
+    public required Guid PlayerId { get; init; }
+
+}
+
 public class RpcRequest
 {
     public required int Id { get; init; }
@@ -23,4 +30,6 @@ public class RpcRequest
     public GetInfoType? GetInfo { get; init; }
 
     public JoinRequest? Join { get; init; }
+
+    public GetPlayerHandsRequest? GetPlayerHands { get; init; }
 }
