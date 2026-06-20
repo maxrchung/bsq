@@ -74,4 +74,12 @@ offset_right = 53.0
 offset_bottom = 260.0
 text = "Player:"
 
+[node name="StartButton" type="Button" parent="." unique_id=1283160164]
+offset_left = 13.0
+offset_top = 269.0
+offset_right = 119.0
+offset_bottom = 300.0
+text = "START GAME"
+
 [connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
+[connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]
