@@ -109,6 +109,24 @@ public class GameLobby
         await UpdateHands();
     }
 
+    public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid) {
+        var bid = new List<Card>();
+        foreach (Dictionary<string, string> raw_card in raw_bid) {
+            foreach (var (suit, value) in myDict)
+            {
+                Enum.TryParse<CardSuit>(suit, true, out CardSuit card_suit);
+                Enum.TryParse<CardValue>(value, true, out CardSuit card_value);
+                var new_card = new Card(card_value, card_suit);
+                bid.Add(new_card);
+            }
+        }
+        if (_board.ValidateBid(bid)) {
+            _board.setBid(bid);
+            return true;
+        }
+        return false
+    }
+
     public async Task UpdateDeck()
     {
         await InvokeAll(new RpcResponse { Id = 0, Deck = DeckToRpc() });
@@ -141,14 +159,6 @@ public class GameLobby
 
             _emergencyMeeting.VotesAgainst.Add(player);
             await BroadcastMeeting();
-        }
-        else if (type == InvokeCtlType.MeetingFinished) {
-            // _emergencyMeeting.End(); ?
-            return;
-        }
-        else if (type == InvokeCtlType.Bid) {
-            // await SetBid();
-            return;
         }
     }
 
