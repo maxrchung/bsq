@@ -8,6 +8,7 @@ var socket = WebSocketPeer.new()
 var json = JSON.new()
 var itemMap: Dictionary[int, String] = {}
 
+
 enum ClientState {
 	Connecting,
 	Idle,
@@ -16,6 +17,9 @@ enum ClientState {
 }
 
 var clientState: ClientState = ClientState.Connecting
+
+var myLobbyId
+var myPlayerId
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -45,6 +49,14 @@ func _handle_rsp(text: String) -> void:
 		itemMap = {}
 		for lobby in d.lobbyList:
 			itemMap[lobbyList.add_item(lobby.name)] = lobby.id
+			
+	if "lobbyChange" in d:
+		myLobbyId = d.lobbyChange.id
+		$"../LobbyIdText".text = "Lobby: " + myLobbyId
+			
+	if "localIdChange" in d:
+		myPlayerId = d.localIdChange
+		$"../PlayerIdText".text = "Player: " + myPlayerId
 
 func _process_socket() -> void:
 	if clientState == ClientState.Failed: return

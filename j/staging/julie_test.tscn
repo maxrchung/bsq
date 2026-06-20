@@ -60,4 +60,18 @@ offset_right = 1140.0
 offset_bottom = 54.0
 text = "Send Json Request"
 
+[node name="LobbyIdText" type="Label" parent="." unique_id=1002534460]
+offset_left = 13.0
+offset_top = 214.0
+offset_right = 53.0
+offset_bottom = 237.0
+text = "Lobby:"
+
+[node name="PlayerIdText" type="Label" parent="." unique_id=1173182417]
+offset_left = 13.0
+offset_top = 237.0
+offset_right = 53.0
+offset_bottom = 260.0
+text = "Player:"
+
 [connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
