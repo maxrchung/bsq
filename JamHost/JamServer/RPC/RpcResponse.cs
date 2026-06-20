@@ -8,22 +8,46 @@ public record OkResponse
     public required string Message { get; init; } = "";
 }
 
+public record LobbyPlayer(Guid Id, string Name)
+{
+    public static LobbyPlayer From(GameLobbyPlayer p)
+    {
+        return new LobbyPlayer(p.Id, p.Name);
+    }
+}
+
 public record LobbyChangeMessage
 {
     public required Guid Id { get; init; }
     public required string Name { get; init; }
-    public required IReadOnlyList<string> Players { get; init; }
+    public required IReadOnlyList<LobbyPlayer> Players { get; init; }
 }
 
 public record CardInfo
 {
     public required CardSuit Suit { get; init; }
     public required CardValue Value { get; init; }
+
+    public static CardInfo From(Card c)
+    {
+        return new CardInfo
+        {
+            Suit = c.Suit,
+            Value = c.Value
+        };
+    }
 }
 
 public record DeckInfo
 {
     public required IReadOnlyList<CardInfo> Cards { get; init; }
+}
+
+public record PlayerHandInfo
+{
+    public required Guid Id { get; init; }
+    public required int CardCount { get; init; }
+    public IReadOnlyList<CardInfo>? Cards { get; init; }
 }
 
 public record RpcResponse
@@ -35,8 +59,12 @@ public record RpcResponse
     public IReadOnlyList<LobbyListEntry>? LobbyList { get; set; }
 
     public LobbyChangeMessage? LobbyChange { get; set; }
-    
+
     public DeckInfo? Deck { get; set; }
+
+    public IReadOnlyList<PlayerHandInfo>? PlayerHands { get; set; }
+
+    public Guid? LocalIdChange { get; set; }
 
     public string? Error { get; set; }
 }
