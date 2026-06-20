@@ -1,8 +1,9 @@
+using JamServer.Lobby;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
-using JamServer.Lobby;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace JamServer.RPC;
 
@@ -71,6 +72,8 @@ public class RpcPipe
     private async Task HandleRecv(string data)
     {
         var id = -1;
+
+        Debug.WriteLine(data);
 
         try
         {
