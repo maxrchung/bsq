@@ -17,4 +17,8 @@ public class GamePlayer
     {
         _hand = cards;
     }
+
+    public void IncreaseHandSize() {
+        HandSize += 1;
+    }
 }

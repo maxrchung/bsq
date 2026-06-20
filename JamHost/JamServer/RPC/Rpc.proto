@@ -49,6 +49,7 @@ message RpcRequest {
   ConnectRequest connect = 2;
   GetInfoType get_info = 3;
   JoinRequest join = 4;
+  BidRequest bid = 5;
 }
 
 // -------------------------------------------------------------------
