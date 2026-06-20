@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace BalaloGame;
 
 public enum CardSuit
@@ -30,7 +32,10 @@ public class Card
     private CardValue _value;
     private CardSuit _suit;
 
+    public CardSuit Suit => _suit;
     public CardValue Value => _value;
+
+    [JsonIgnore]
     public int ValueInt => _value switch
     {
         CardValue.Two => 2,
@@ -54,10 +59,10 @@ public class Card
     }
 
     public bool Is(CardValue value) => _value == value;
-    
+
     public bool IsSameSuit(Card other) => _suit == other._suit;
     public bool IsSameValue(Card other) => _value == other._value;
-    
+
     public override string ToString()
     {
         return $"{_value} of {_suit}s";

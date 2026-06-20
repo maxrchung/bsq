@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-using JamServer.Game;
-using JamServer.Models;
+using BalaloGame;
 using JamServer.RPC;
 
 namespace JamServer.Lobby;
@@ -11,17 +9,20 @@ public class LobbyPlayer
     public required PlayerChannel Channel { get; init; }
 }
 
-public class GameLobby(LobbyCoordinator coordinator, Guid id, string name)
+public class GameLobby
 {
-    private readonly Deck _deck = Deck.CreateDefault();
+    private readonly Deck _deck = Deck.GenerateDefault();
 
     private readonly List<LobbyPlayer> _players = new();
 
-    public readonly LobbyInfo Info = new()
+    public readonly string Name;
+    public readonly Guid Id;
+
+    public GameLobby(string name, Guid id)
     {
-        Id = id,
-        Name = name,
-    };
+        Name = name;
+        Id = id;
+    }
 
     private async Task InvokeAll(RpcResponse msg)
     {
@@ -32,16 +33,25 @@ public class GameLobby(LobbyCoordinator coordinator, Guid id, string name)
     {
         var msg = new RpcResponse
         {
-            Id = -1,
+            Id = 0,
             LobbyChange = new LobbyChangeMessage
             {
-                Id = Info.Id,
-                Name = Info.Name,
+                Id = Id,
+                Name = Name,
                 Players = _players.Select(x => x.Name).ToList()
             }
         };
         await InvokeAll(msg);
     }
+
+    private DeckInfo DeckToRpc() => new DeckInfo
+    {
+        Cards = _deck.Cards.Select(x => new CardInfo
+        {
+            Suit = x.Suit,
+            Value = x.Value
+        }).ToList()
+    };
 
     public async ValueTask<LobbyPlayer> BindPlayer(string name, PlayerChannel channel)
     {
@@ -52,6 +62,11 @@ public class GameLobby(LobbyCoordinator coordinator, Guid id, string name)
         };
         _players.Add(player);
         await BroadcastLobbyChange();
+        await channel.Send(new RpcResponse
+        {
+            Id = 0,
+            Deck = DeckToRpc()
+        });
         return player;
     }
 }
