@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dmxrpya7jf6at"]
 
-[ext_resource type="Texture2D" uid="uid://crurs8ditxqer" path="res://mj/card_sheet.png" id="1_q5obu"]
+[ext_resource type="Texture2D" uid="uid://mqookf8tkuem" path="res://mj/card_sheet.png" id="1_q5obu"]
 [ext_resource type="Script" uid="uid://to5hdiutjnlu" path="res://card.gd" id="2_q5obu"]
 
 [node name="Card" type="Sprite2D" unique_id=1163130692]
-position = Vector2(523, 282)
+position = Vector2(579, 337)
 texture = ExtResource("1_q5obu")
 region_enabled = true
 region_rect = Rect2(0, 0, 250, 350)
@@ -18,3 +18,9 @@ position = Vector2(1.5258789e-05, 0)
 texture = ExtResource("1_q5obu")
 region_enabled = true
 region_rect = Rect2(500, 0, 250, 350)
+
+[node name="Border" type="Sprite2D" parent="." unique_id=974985341]
+position = Vector2(1.5258789e-05, 0)
+texture = ExtResource("1_q5obu")
+region_enabled = true
+region_rect = Rect2(13750, 0, 250, 350)
