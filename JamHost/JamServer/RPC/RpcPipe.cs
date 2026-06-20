@@ -19,6 +19,8 @@ public interface IRpcListener
 
     public ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type);
 
+    public ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards);
+
     public void OnError(Exception e);
 }
 
@@ -58,6 +60,9 @@ public class RpcPipe
             {
                 rsp.Error = "unknown info type";
             }
+        }
+        else if (req.Bid != null) {
+            rsp.Ok = await _server.AcceptBidAsync(req.Bid.Cards);
         }
         else if (req.InvokeCtl.HasValue)
         {

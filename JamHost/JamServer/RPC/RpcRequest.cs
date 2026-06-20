@@ -15,12 +15,19 @@ public enum InvokeCtlType
     StartGame,
     EmergencyMeetingVoteFor,
     EmergencyMeetingVoteAgainst,
+    Bid,
+    MeetingFinished,
 }
 
 public record JoinRequest
 {
     public required Guid LobbyId { get; init; }
     public required string PlayerName { get; init; }
+}
+
+public record BidRequest
+{ 
+    public required List<Dictionary<string, string>> Cards { get; init; }
 }
 
 public class RpcRequest
@@ -30,4 +37,5 @@ public class RpcRequest
     public GetInfoType? GetInfo { get; init; }
     public InvokeCtlType? InvokeCtl { get; init; }
     public JoinRequest? Join { get; init; }
+    public BidRequest? Bid { get; init; }
 }

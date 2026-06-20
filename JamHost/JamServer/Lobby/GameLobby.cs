@@ -142,6 +142,14 @@ public class GameLobby
             _emergencyMeeting.VotesAgainst.Add(player);
             await BroadcastMeeting();
         }
+        else if (type == InvokeCtlType.MeetingFinished) {
+            // _emergencyMeeting.End(); ?
+            return;
+        }
+        else if (type == InvokeCtlType.Bid) {
+            // await SetBid();
+            return;
+        }
     }
 
     public async ValueTask<GameLobbyPlayer> BindPlayer(string name, PlayerChannel channel)

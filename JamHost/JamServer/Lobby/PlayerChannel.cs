@@ -81,6 +81,13 @@ public class PlayerChannel : IRpcListener
         return new OkResponse { Message = "joined" };
     }
 
+    public async ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards) {
+        foreach (var card in cards) {
+            Console.WriteLine(card);
+        }
+        return new OkResponse { Message = "Accepted bid" };
+    }
+
     public async ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type)
     {
         if (_lobbyPlayer == null)
