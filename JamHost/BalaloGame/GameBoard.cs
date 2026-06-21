@@ -1,4 +1,6 @@
 namespace BalaloGame;
+using BalaloGame.Scoring;
+
 
 public class GameBoard
 {
@@ -67,8 +69,8 @@ public class GameBoard
     }
 
     public int CalculateValue(List<Card> bid) {
-        Random rand = new Random();
-        return rand.Next();
+        var score = MatchFinder.GetScoringType(bid);
+        return score.CalculateBaseScore();
     }
 
     public bool CheckBs() {
