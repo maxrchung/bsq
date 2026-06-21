@@ -42,3 +42,10 @@ render_hand={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+
+[shader_globals]
+
+mouse_screen_pos={
+"type": "vec2",
+"value": Vector2(0, 0)
+}
