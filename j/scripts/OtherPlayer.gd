@@ -1,8 +1,10 @@
 class_name OtherPlayer extends Node
 
 var player_id: int
-var hand: Array[Card]
+var hand: Array[PlayingCard]
 var hand_size: int
+
+const PLAYING_CARD_SCENE = preload("res://objects/PlayingCard.tscn")
 
 @onready var label: RichTextLabel = $Sprite2D/RichTextLabel
 @onready var spawnPath: Path2D = $SpawnPath
@@ -10,7 +12,7 @@ var hand_size: int
 ## CARD FAN CONSTANTS
 # card separation distance and scale
 var carddist_offset: float = 0.8 # ratio of card width apart that cards spawn
-var cardscale: float = 0.15 
+var cardscale: float = 0.3 
 # maximum rotation angle for card fan
 var max_card_rotation_deg: float = 15.0 
 var max_card_rotation_rad: float = deg_to_rad(max_card_rotation_deg)
@@ -37,17 +39,18 @@ func render_hand() -> void:
 	var total_length = curve.get_baked_length()
 
 func spawn_along_curve(count: int) -> void:
-	var spawn_distance = carddist_offset * Card.width * cardscale
 	var curve: Curve2D = spawnPath.curve
 	if curve.get_baked_points().size() == 0:
 		return
 
-	
-
-	# 1. Calculate the starting horizontal offset relative to the Path2D's local origin
-	var start_offset_x: float = (count - 1) * spawn_distance / 2.0
-
 	for i in range(count):
+		var instance: PlayingCard = PLAYING_CARD_SCENE.instantiate()
+		instance.face_up = false
+
+		var spawn_distance = carddist_offset * instance.custom_minimum_size.x * cardscale
+	
+		# 1. Calculate the starting horizontal offset relative to the Path2D's local origin
+		var start_offset_x: float = (count - 1) * spawn_distance / 2.0
 		# 2. Determine the target X coordinate for this instance
 		var target_x: float = (i * spawn_distance) - start_offset_x
 		
@@ -57,18 +60,28 @@ func spawn_along_curve(count: int) -> void:
 		# 4. Calculate rotation factor from -1.0 (leftmost) to 1.0 (rightmost)
 		var rotation_factor: float = 0.0
 		if count > 1:
-			# Maps i from [0, count-1] to [-1.0, 1.0]
 			rotation_factor = (i / (count - 1.0)) * 2.0 - 1.0
 		
-		# Leftmost rotates CCW (negative angle), rightmost rotates CW (positive angle)
 		var target_rotation: float = rotation_factor * max_card_rotation_rad
 		
-		# 5. Instance, position, and rotate the object
-		var instance = Card.make_card(false)
-		instance.position = Vector2(target_x, target_y)
-		instance.scale = Vector2(cardscale, cardscale)
-		instance.rotation = target_rotation # Apply the fan rotation
+		# --- NEW PIVOT FIX CODE ---
+		# 1. Determine the center of the card in local space, accounting for scale
+		var card_center_local: Vector2 = (instance.custom_minimum_size * cardscale) / 2.0
 		
+		# 2. Rotate that center vector by our target rotation
+		var rotated_center: Vector2 = card_center_local.rotated(target_rotation)
+		
+		# 3. Calculate the top-left position by subtracting the rotated center 
+		#    from our intended curve center position (target_x, target_y)
+		var target_center: Vector2 = Vector2(target_x, target_y)
+		var top_left_position: Vector2 = target_center - rotated_center
+		# --------------------------
+		
+		# 5. Position, scale, and rotate the object
+		instance.position = top_left_position
+		instance.scale = Vector2(cardscale, cardscale)
+		instance.rotation = target_rotation 
+		instance.z_index = 2
 		add_child(instance)
 		
 # Helper function to sample the curve's Y value at a specific X coordinate

@@ -10,7 +10,7 @@ _data = {
 }
 point_count = 3
 
-[node name="Table" type="Node2D" unique_id=405032809]
+[node name="DebugTable" type="Node2D" unique_id=405032809]
 script = ExtResource("1_so1t7")
 
 [node name="SpawnPath" type="Path2D" parent="." unique_id=532965899]
@@ -19,6 +19,7 @@ scale = Vector2(10, 10)
 curve = SubResource("Curve2D_irtva")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1626650095]
+visible = false
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0

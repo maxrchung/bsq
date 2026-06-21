@@ -4,8 +4,14 @@ const OTHER_PLAYER_SCENE = preload("res://scenes/OtherPlayer.tscn")
 
 @onready var spawn_path: Path2D = $SpawnPath
 
+@export var debug_lobby_size = 2
+
 var game_state: GameState
 
+func _ready() -> void:
+	if name == "DebugTable":
+		init_table(debug_lobby_size)
+		
 func init_table(num_players: int) -> void:
 	print("init table called")
 	game_state = GameState.new()
