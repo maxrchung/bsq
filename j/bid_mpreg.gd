@@ -32,3 +32,9 @@ func set_card(suit, value):
 			$NumberDropdown.selected = i
 			break
 	
+
+
+func _on_clear_button_pressed() -> void:
+	$SuitDropdown.selected = -1
+	$NumberDropdown.selected = -1
+	
