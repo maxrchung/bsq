@@ -46,6 +46,8 @@ func update_state(player_id, bidder_id, emergency_meeting):
 			has_voted = true
 			break
 		
+		
+	$EmergencyButton.visible = false
 	$NoBsButton.visible = true
 	$BsButton.visible = true
 	$NotBsLabel.visible = true
@@ -55,7 +57,6 @@ func update_state(player_id, bidder_id, emergency_meeting):
 	$BsLabel.text = "BS: " + str(votes_against.size())
 		
 	if is_bidder or has_voted:
-		$EmergencyButton.visible = false
 		$NoBsButton.visible = false
 		$BsButton.visible = false
 

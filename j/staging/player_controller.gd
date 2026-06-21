@@ -71,10 +71,12 @@ func _handle_rsp(text: String) -> void:
 	
 	if "gameStateUpdateEvent" in d:
 		var event = d.gameStateUpdateEvent
-		if event.eventType == "RoundStart" or event.eventType == 0:
+		if event.eventType == "RoundStart":
 			bidPlayer = null
 			currentPlayer = null
 			$"../EmergencyMeeting".reset()
+		elif event.eventType == "GameOver":
+			print("GAME OVER")
 	
 	if "lobbyList" in d:
 		lobbyList.clear()
@@ -120,6 +122,7 @@ func _handle_rsp(text: String) -> void:
 		
 	if "emergencyMeeting" in d:
 		$"../EmergencyMeeting".update_state(myPlayerId, bidPlayer, d.emergencyMeeting)
+		$"../BidButton".visible = false
 
 func _process_socket() -> void:
 	if clientState == ClientState.Failed: return
