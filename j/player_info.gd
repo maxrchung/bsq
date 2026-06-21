@@ -6,7 +6,7 @@ var score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Name.text = "Name: " + player_name
+	$Name.text = player_name
 	
 	if int(card_count) == 0:
 		$CardCount.text = "Cards: -"
