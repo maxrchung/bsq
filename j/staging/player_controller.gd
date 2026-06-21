@@ -144,6 +144,7 @@ func _handle_rsp(text: String) -> void:
 				"id": player.id,
 				"name": player.name,
 				"cardCount": 0,
+				"score": 0,
 				"cards": []
 			})	
 		$"../PlayerInfos".update_players(playerHands, myPlayerId)

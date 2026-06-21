@@ -49,6 +49,7 @@ public record PlayerHandInfo
     public required int CardCount { get; init; }
     public IReadOnlyList<CardInfo>? Cards { get; init; }
     public required string Name { get; init; }
+    public required int Score { get; init; }
 }
 
 public record EmergencyMeetingInfo

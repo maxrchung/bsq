@@ -103,7 +103,8 @@ public class GameLobby
             Cards = ShouldRevealHandTo(player, x)
                 ? x.GamePlayer.HandCards.Select(CardInfo.From).ToList()
                 : null,
-            Name = x.Name
+            Name = x.Name,
+            Score = x.GamePlayer.GetScore()
         }).ToList();
     }
 

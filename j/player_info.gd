@@ -2,6 +2,7 @@ extends Node2D
 
 var player_name = ""
 var card_count = 0
+var score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,6 +12,11 @@ func _ready() -> void:
 		$CardCount.text = "Cards: -"
 	else:
 		$CardCount.text = "Cards: " + str(int(card_count))
+		
+	if int(card_count) == 0:
+		$Score.text = "Score: -"
+	else:
+		$Score.text = "Score: " + str(int(score))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
