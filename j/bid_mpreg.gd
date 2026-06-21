@@ -20,14 +20,14 @@ func get_card():
 	}
 	return card
 
-func set_card(suit, number):
+func set_card(suit, value):
 	for i in $SuitDropdown.item_count:
 		if $SuitDropdown.get_item_text(i) == suit:
 			$SuitDropdown.selected = i
 			break
 	
 	for i in $NumberDropdown.item_count:
-		if $NumberDropdown.get_item_text(i) == str(number):
+		if $NumberDropdown.get_item_text(i) == str(value):
 			$NumberDropdown.selected = i
 			break
 	

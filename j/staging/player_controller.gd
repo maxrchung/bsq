@@ -20,6 +20,7 @@ var clientState: ClientState = ClientState.Connecting
 
 var myLobbyId
 var myPlayerId
+var currentPlayer
 
 var playerHands
 
@@ -49,10 +50,7 @@ func _do_join() -> void:
 	$"../PlayerInfos".visible = true
 	$"../Hand".visible = true
 	$"../StartButton".visible = true
-	
-	$"../EmergencyMeetingButton".visible = true
-	$"../VoteForButton".visible = true
-	$"../VoteAgainstButton".visible = true
+	$"../CurrentText".visible = true
 	
 	$"../BidMpregs".visible = true
 	$"../BidButton".visible = true
@@ -85,6 +83,25 @@ func _handle_rsp(text: String) -> void:
 		for playerHand in playerHands:
 			if myPlayerId == playerHand.id:
 				$"../Hand".update_cards(playerHand.cards)
+				
+	if "currentPlayer" in d:
+		currentPlayer = d.currentPlayer
+		
+		$"../CurrentText".text = "Current: " + currentPlayer
+		
+		if currentPlayer == myPlayerId:
+			$"../BidButton".visible = true
+			$"../EmergencyMeetingButton".visible = false
+		else:
+			$"../BidButton".visible = false
+			$"../EmergencyMeetingButton".visible = true
+
+		$"../VoteForButton".visible = false
+		$"../VoteAgainstButton".visible = false
+		
+	if "bid" in d:
+		var bid = d.bid
+		$"../BidMpregs".set_cards(bid)
 
 func _process_socket() -> void:
 	if clientState == ClientState.Failed: return

@@ -35,6 +35,6 @@ func set_cards(cards):
 		
 		if i < cards.size():
 			var card = cards[i]
-			bid.set_card(card.suit, card.number)
+			bid.set_card(card.suit, card.value)
 			
 		add_child(bid)

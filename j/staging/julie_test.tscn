@@ -105,9 +105,17 @@ offset_right = 115.0
 offset_bottom = 98.0
 text = "START GAME"
 
+[node name="CurrentText" type="Label" parent="." unique_id=1332419141]
+visible = false
+offset_left = 9.0
+offset_top = 116.0
+offset_right = 78.0
+offset_bottom = 139.0
+text = "Current: "
+
 [node name="PlayerInfos" type="Node2D" parent="." unique_id=1647946707]
 visible = false
-position = Vector2(9, 116)
+position = Vector2(9, 161)
 script = ExtResource("3_8y7d7")
 player_info_scene = ExtResource("4_6rarn")
 
