@@ -41,11 +41,19 @@ public class GameLobby
     private readonly GameBoard _board = new();
 
     private readonly List<GameLobbyPlayer> _players = new();
+    private List<GameLobbyPlayer> _active_players = new ();
+    private List<GameLobbyPlayer> _inactive_players = new ();
+    private int _player_index = 0;
+    private int _round_count = 0;
 
     public readonly string Name;
     public readonly Guid Id;
 
     private readonly EmergencyMeetingState _emergencyMeeting = new();
+
+    public const int HAND_LIMIT = 6;
+    public const int SCORE_LIMIT = 100;
+
 
     public GameLobby(string name, Guid id)
     {
@@ -106,7 +114,15 @@ public class GameLobby
     public async Task NextRound()
     {
         _board.NextRound();
+        _round_count += 1;
         await UpdateHands();
+    }
+
+    public async Task NextTurn() {
+        var current_player = _active_players[_player_index];
+        await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
+        _player_index += 1;
+        _player_index = _player_index % _active_players.Count;
     }
 
     public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid) {
@@ -122,9 +138,54 @@ public class GameLobby
         }
         if (_board.ValidateBid(bid)) {
             _board.SetBid(bid);
+            await InvokeAll(new RpcResponse { Id = 0, Bid = bid });
+            await NextTurn();
             return true;
         }
         return false;
+    }
+
+    public void UpdatePlayers(bool result) {
+        // false == not bs, the bid is valid
+        // true == bs, bid is not valid
+        if (result) {
+            Penalize(new List<GameLobbyPlayer>() { _players[_player_index]}); // penalize the person that bid
+            Reward(_emergencyMeeting.VotesAgainst);
+        }
+        else {
+            Penalize(_emergencyMeeting.VotesAgainst);
+            Reward(_emergencyMeeting.VotesFor);
+        }
+    }
+
+    public async Task UpdateGame() {
+        var new_inactive_players = new List<GameLobbyPlayer>();
+        foreach (var player in _active_players) {
+            if (player.GamePlayer.Score >= SCORE_LIMIT) {
+                await EndGame();
+            }
+            if (player.GamePlayer.HandSize >= HAND_LIMIT) {
+                new_inactive_players.Add(player);
+            }
+        }
+
+        foreach (var inactive_player in new_inactive_players) {
+            _inactive_players.Add(inactive_player);
+            _active_players.Remove(inactive_player);
+        }
+    }
+
+    public void Penalize(List<GameLobbyPlayer> players) {
+        foreach (var player in players) {
+            player.GamePlayer.IncreaseHandSize();
+            player.GamePlayer.DecreasePoints(_board.GetBidValue());
+        }
+    }
+
+    public void Reward(List<GameLobbyPlayer> players) {
+        foreach (var player in players) {
+            player.GamePlayer.IncreasePoints(_board.GetBidValue());
+        }
     }
 
     public async Task UpdateDeck()
@@ -137,16 +198,25 @@ public class GameLobby
         await InvokeAll(new RpcResponse { Id = 0, EmergencyMeeting = _emergencyMeeting.ToRpc() });
     }
 
+    private async Task EndGame() {
+        await InvokeAll(new RpcResponse { Id = 0 });
+    }
+
     public async Task InvokeCtl(GameLobbyPlayer player, InvokeCtlType type)
     {
         if (type == InvokeCtlType.StartGame)
         {
+            _active_players = _players;
             await UpdateDeck();
             await NextRound();
+            await NextTurn();
         }
         else if (type == InvokeCtlType.EmergencyMeetingVoteFor)
         {
-            if (!_emergencyMeeting.IsActive) return;
+            if (!_emergencyMeeting.IsActive)
+            {
+                return;
+            }
             _emergencyMeeting.VotesFor.Add(player);
             await BroadcastMeeting();
         }
@@ -159,6 +229,15 @@ public class GameLobby
 
             _emergencyMeeting.VotesAgainst.Add(player);
             await BroadcastMeeting();
+        }
+        else if (type == InvokeCtlType.EmergencyMeetingOver) {
+            // calculate who voted for, and who voted against
+            // set emergency_meeting to inactive _emergencyMeeting.IsActive
+            var meeting_result = _board.CheckBs();
+            UpdatePlayers(meeting_result);
+            await UpdateGame();
+            await UpdateDeck();
+            await NextRound();
         }
     }
 

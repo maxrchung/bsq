@@ -67,6 +67,8 @@ public record RpcResponse
 
     public LobbyChangeMessage? LobbyChange { get; set; }
 
+    public Guid? CurrentPlayer { get; set; }
+
     public DeckInfo? Deck { get; set; }
 
     public IReadOnlyList<PlayerHandInfo>? PlayerHands { get; set; }
@@ -74,6 +76,8 @@ public record RpcResponse
     public Guid? LocalIdChange { get; set; }
 
     public EmergencyMeetingInfo? EmergencyMeeting { get; set; }
+
+    public IReadOnlyList<Card>? Bid { get; set; }
 
     public string? Error { get; set; }
 }

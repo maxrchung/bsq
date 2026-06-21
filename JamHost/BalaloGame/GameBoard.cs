@@ -35,6 +35,10 @@ public class GameBoard
         _players.Remove(player);
     }
 
+    public int GetBidValue() {
+        return _bidValue;
+    }
+
     public void SetBid(List<Card> bid) {
         _bid = bid;
         _bidValue = CalculateValue(bid);
@@ -51,5 +55,26 @@ public class GameBoard
     public int CalculateValue(List<Card> bid) {
         Random rand = new Random();
         return rand.Next();
+    }
+
+    public bool CheckBs() {
+        var cards_in_play = new List<Card>();
+        foreach (var player in _players) {
+            cards_in_play.AddRange(player.HandCards);
+        }
+
+        var bid_copy = new List<Card>(_bid);
+        foreach (var bid_card in _bid) {
+            if (cards_in_play.Contains(bid_card)) {
+                bid_copy.Remove(bid_card);
+                cards_in_play.Remove(bid_card);
+            }
+        }
+
+        if (bid_copy.Count == 0) {
+            return false;
+        }
+
+        return true;
     }
 }

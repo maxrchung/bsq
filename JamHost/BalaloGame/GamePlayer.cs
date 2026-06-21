@@ -5,6 +5,7 @@ public class GamePlayer
     private readonly GameBoard _board;
     private List<int> _hand = [];
     public int HandSize = 3;
+    public int Score = 0;
 
     public GamePlayer(GameBoard board)
     {
@@ -20,5 +21,13 @@ public class GamePlayer
 
     public void IncreaseHandSize() {
         HandSize += 1;
+    }
+
+    public void IncreasePoints(int points) {
+        Score += points;
+    }
+
+    public void DecreasePoints(int points) {
+        Score -= points;
     }
 }
