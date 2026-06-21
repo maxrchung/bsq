@@ -11,15 +11,30 @@ func _process(delta: float) -> void:
 	pass
 
 func get_card():
-	if $SuitDropdown.selected < 0 or $NumberDropdown.selected < 0:
-		return
+	var suit = ""
+	if $SuitDropdown.selected > 0:
+		suit = $SuitDropdown.get_item_text($SuitDropdown.selected)
 	
-	var suit = $SuitDropdown.get_item_text($SuitDropdown.selected)
-	var value = $NumberDropdown.get_item_text($NumberDropdown.selected)
-	var card = {
+	var value = ""
+	if $NumberDropdown.selected > 0:
+		value = $NumberDropdown.get_item_text($NumberDropdown.selected)
+		
+	if not suit and not value:
+		return
+		
+	if not suit and value:
+		return {
+			"None": value
+		}
+	
+	if not value and suit:
+		return {
+			suit: "None"
+		}
+		
+	return {
 		suit: value
 	}
-	return card
 
 func set_card(suit, value):
 	for i in $SuitDropdown.item_count:
