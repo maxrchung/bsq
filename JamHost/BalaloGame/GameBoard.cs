@@ -29,6 +29,7 @@ public class GameBoard
         }
         _bidValue = 0;
         _bid = new List<Card>();
+        _bidPlayer = null;
     }
 
     public GamePlayer AddPlayer(Guid id)
