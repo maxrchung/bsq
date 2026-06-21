@@ -6,26 +6,25 @@
 script = ExtResource("1_ybcmp")
 
 [node name="EmergencyButton" type="Button" parent="." unique_id=1269895082]
-custom_minimum_size = Vector2(250, 40)
+offset_left = 71.0
 offset_top = 47.0
-offset_right = 250.0
+offset_right = 213.0
 offset_bottom = 87.0
-text = "Emergency Meeting!!!"
-metadata/_edit_use_anchors_ = true
+text = "That's BS !!!"
 
 [node name="NotBsLabel" type="Label" parent="." unique_id=469924403]
-offset_left = 104.0
-offset_top = 57.0
-offset_right = 186.0
-offset_bottom = 80.0
+offset_left = 110.0
+offset_top = 56.0
+offset_right = 192.0
+offset_bottom = 79.0
 text = "NOT BS: "
 metadata/_edit_use_anchors_ = true
 
 [node name="BsLabel" type="Label" parent="." unique_id=1194557584]
-offset_left = 104.0
-offset_top = 10.0
-offset_right = 144.0
-offset_bottom = 33.0
+offset_left = 110.0
+offset_top = 9.0
+offset_right = 150.0
+offset_bottom = 32.0
 text = "BS: "
 metadata/_edit_use_anchors_ = true
 
@@ -34,7 +33,7 @@ custom_minimum_size = Vector2(0, 40)
 offset_top = 47.0
 offset_right = 94.0
 offset_bottom = 87.0
-text = "No BS"
+text = "Not BS"
 metadata/_edit_use_anchors_ = true
 
 [node name="BsButton" type="Button" parent="." unique_id=508172740]

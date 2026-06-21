@@ -144,13 +144,13 @@ offset_bottom = 412.0
 text = "Submit hand"
 
 [node name="EmergencyMeeting" parent="." unique_id=1828152688 instance=ExtResource("7_766oo")]
-position = Vector2(892, 548)
+position = Vector2(924, 548)
 
 [node name="QuitButton" type="Button" parent="." unique_id=763266404]
 visible = false
 offset_left = 9.0
 offset_top = 599.0
-offset_right = 75.0
+offset_right = 86.0
 offset_bottom = 633.0
 text = "< Quit"
 
