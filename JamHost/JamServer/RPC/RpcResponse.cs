@@ -76,7 +76,6 @@ public record GameStateUpdateEvent
     public required Type EventType { get; init; }
     public int? MaxRounds { get; init; }
     public RoundInfo? CurrentRound { get; init; }
-    public IReadOnlyList<LobbyPlayer>? ActivePlayers { get; init; }
     public Guid? Winner {get; init; }
 
 }
