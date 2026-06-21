@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://deckn0bcnq22x"]
+
+[ext_resource type="Shader" uid="uid://c80ibmk2h48bq" path="res://shaders/Card.gdshader" id="1_pueil"]
+[ext_resource type="Texture2D" uid="uid://n75yj5yaq2rv" path="res://assets/CardAtlas.png" id="2_2wr72"]
+[ext_resource type="Script" uid="uid://d0rp6p0hgh8sn" path="res://objects/PlayingCard.gd" id="3_2wr72"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yei77"]
+shader = ExtResource("1_pueil")
+shader_parameter/SPEED = 0.5
+shader_parameter/AMPLITUDE = 5.0
+
+[node name="PlayingCard" type="TextureRect" unique_id=1546708771]
+texture_filter = 1
+texture_repeat = 1
+material = SubResource("ShaderMaterial_yei77")
+offset_right = 125.0
+offset_bottom = 175.0
+texture = ExtResource("2_2wr72")
+expand_mode = 1
+script = ExtResource("3_2wr72")
