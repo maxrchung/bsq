@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 namespace BalaloGame;
 
 public class Deck
@@ -14,8 +16,10 @@ public class Deck
         var deck = new Deck();
         foreach (var suit in Enum.GetValues<CardSuit>())
         {
+            if (suit is CardSuit.None or CardSuit.Star) continue;
             foreach (var value in Enum.GetValues<CardValue>())
             {
+                if (value is CardValue.None or CardValue.Question) continue;
                 deck._baseCards.Add(new Card(value, suit));
             }
         }
