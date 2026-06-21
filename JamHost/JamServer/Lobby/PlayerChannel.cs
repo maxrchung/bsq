@@ -81,6 +81,20 @@ public class PlayerChannel : IRpcListener
         return new OkResponse { Message = "joined" };
     }
 
+    public async ValueTask<OkResponse> CreateLobbyAsync(string playerName)
+    {
+        if (_lobbyPlayer != null)
+        {
+            throw new Exception("Already in lobby");
+        }
+
+        _name = playerName;
+
+        var lobby = _coordinator.CreateLobby(playerName + " :)");
+        _lobbyPlayer = await lobby.BindPlayer(playerName, this);
+        return new OkResponse { Message = "created" };
+    }
+
     public async ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards) {
         var lobby = _lobbyPlayer.Lobby;
         var validated = await lobby.ValidateBid(cards);

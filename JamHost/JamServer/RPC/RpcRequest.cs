@@ -18,6 +18,11 @@ public enum InvokeCtlType
     EmergencyMeetingOver,
 }
 
+public record CreateRequest
+{
+    public required string PlayerName { get; init; }
+}
+
 public record JoinRequest
 {
     public required Guid LobbyId { get; init; }
@@ -40,6 +45,7 @@ public class RpcRequest
     public ConnectRequest? Connect { get; init; }
     public GetInfoType? GetInfo { get; init; }
     public InvokeCtlType? InvokeCtl { get; init; }
+    public CreateRequest? Create { get; init; }
     public JoinRequest? Join { get; init; }
     public BidRequest? Bid { get; init; }
 

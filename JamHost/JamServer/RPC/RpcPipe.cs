@@ -17,6 +17,8 @@ public interface IRpcListener
 
     public ValueTask<OkResponse> JoinLobbyAsync(Guid lobbyId, string playerName);
 
+    public ValueTask<OkResponse> CreateLobbyAsync(string playerName);
+
     public ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type);
 
     public ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards);
@@ -45,6 +47,10 @@ public class RpcPipe
         if (req.Connect != null)
         {
             rsp.Ok = await _server.ConnectAsync(req.Connect);
+        }
+        else if (req.Create != null)
+        {
+            rsp.Ok = await _server.CreateLobbyAsync(req.Create.PlayerName);
         }
         else if (req.Join != null)
         {

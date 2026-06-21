@@ -30,6 +30,7 @@ lobbyList = NodePath("../LobbyStuff/ItemList")
 [node name="LobbyStuff" type="Node2D" parent="." unique_id=2135225762]
 
 [node name="LineEdit" type="LineEdit" parent="LobbyStuff" unique_id=437873862]
+visible = false
 offset_left = 335.0
 offset_top = 552.0
 offset_right = 605.0
@@ -44,6 +45,7 @@ offset_right = 386.0
 offset_bottom = 255.0
 
 [node name="Button" type="Button" parent="LobbyStuff" unique_id=1572874277]
+visible = false
 offset_left = 620.0
 offset_top = 552.0
 offset_right = 692.0
@@ -51,6 +53,7 @@ offset_bottom = 590.0
 text = "Join"
 
 [node name="CreateButton" type="Button" parent="LobbyStuff" unique_id=331745891]
+visible = false
 offset_left = 705.0
 offset_top = 552.0
 offset_right = 800.0
@@ -120,8 +123,7 @@ offset_bottom = 120.0
 text = "Players"
 
 [node name="PlayerInfos" type="Node2D" parent="." unique_id=1647946707]
-visible = false
-position = Vector2(20, 127)
+position = Vector2(18, 127)
 script = ExtResource("3_8y7d7")
 player_info_scene = ExtResource("4_6rarn")
 

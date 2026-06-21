@@ -44,6 +44,10 @@ func _on_connect_button_pressed() -> void:
 	
 	lobbyList.clear()
 	
+	$"../LobbyStuff/LineEdit".visible = false
+	$"../LobbyStuff/Button".visible = false
+	$"../LobbyStuff/CreateButton".visible = false
+	
 
 func _invoke(name: String, value):
 	var body = {"id": 0}
@@ -176,6 +180,9 @@ func _process_socket() -> void:
 		clientState = ClientState.Idle
 		_invoke("connect", {"version": "hi"})
 		_invoke("getInfo", "lobbies")
+		$"../LobbyStuff/LineEdit".visible = true
+		$"../LobbyStuff/Button".visible = true
+		$"../LobbyStuff/CreateButton".visible = true
 		
 	if clientState == ClientState.Failed: return
 		
@@ -220,11 +227,10 @@ func _on_create_button_pressed() -> void:
 	if name.length() == 0:
 		return
 		
-	if lobbyList.get_selected_items().size() == 0:
-		return
-		
 	if clientState != ClientState.Idle:
 		return
+		
+	_invoke("create", {"playerName": name})
 		
 	$"../LobbyStuff".visible = false
 	$"../LobbyNameLabel".visible = true
