@@ -5,13 +5,38 @@
 [node name="EmergencyMeeting" type="Node2D" unique_id=1828152688]
 script = ExtResource("1_ybcmp")
 
+[node name="EmergencyButton" type="Button" parent="." unique_id=1269895082]
+offset_top = 19.0
+offset_right = 182.0
+offset_bottom = 50.0
+text = "Emergency Meeting"
+
 [node name="NotBsLabel" type="Label" parent="." unique_id=469924403]
-offset_top = 23.0
-offset_right = 67.0
-offset_bottom = 46.0
+offset_left = 104.0
+offset_top = 95.0
+offset_right = 171.0
+offset_bottom = 118.0
 text = "NOT BS: "
 
 [node name="BsLabel" type="Label" parent="." unique_id=1194557584]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 104.0
+offset_top = 59.0
+offset_right = 144.0
+offset_bottom = 82.0
 text = "BS: "
+
+[node name="NoBsButton" type="Button" parent="." unique_id=1308671377]
+offset_top = 95.0
+offset_right = 94.0
+offset_bottom = 126.0
+text = "No BS"
+
+[node name="BsButton" type="Button" parent="." unique_id=508172740]
+offset_top = 59.0
+offset_right = 94.0
+offset_bottom = 90.0
+text = "BS"
+
+[connection signal="pressed" from="EmergencyButton" to="." method="on_emergency_press"]
+[connection signal="pressed" from="NoBsButton" to="." method="on_not_bs_press"]
+[connection signal="pressed" from="BsButton" to="." method="on_bs_press"]

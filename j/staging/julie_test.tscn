@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
 [ext_resource type="PackedScene" uid="uid://c5yj2r1lrorg" path="res://bid_mpregs.tscn" id="6_nh24k"]
+[ext_resource type="PackedScene" uid="uid://erf1mvugrkjm" path="res://emergency_meeting.tscn" id="7_766oo"]
 
 [node name="Node2D" type="Node2D" unique_id=866605961]
 
@@ -130,27 +131,6 @@ player_info_scene = ExtResource("4_6rarn")
 [node name="Hand" parent="." unique_id=1932947453 instance=ExtResource("5_jkla0")]
 visible = false
 
-[node name="EmergencyMeetingButton" type="Button" parent="." unique_id=1588457483]
-offset_left = 18.0
-offset_top = 572.0
-offset_right = 179.0
-offset_bottom = 603.0
-text = "Emergency meeting"
-
-[node name="VoteForButton" type="Button" parent="." unique_id=1663568444]
-offset_left = 18.0
-offset_top = 610.0
-offset_right = 88.0
-offset_bottom = 641.0
-text = "Not BS"
-
-[node name="VoteAgainstButton" type="Button" parent="." unique_id=1505338994]
-offset_left = 96.0
-offset_top = 610.0
-offset_right = 251.0
-offset_bottom = 641.0
-text = "BS"
-
 [node name="BidMpregs" parent="." unique_id=176062230 instance=ExtResource("6_nh24k")]
 visible = false
 position = Vector2(453, 287)
@@ -163,10 +143,10 @@ offset_right = 545.0
 offset_bottom = 394.0
 text = "Submit bid"
 
+[node name="EmergencyMeeting" parent="." unique_id=1828152688 instance=ExtResource("7_766oo")]
+position = Vector2(9, 499)
+
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]
 [connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
 [connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]
-[connection signal="pressed" from="EmergencyMeetingButton" to="PlayerController" method="_on_emergency_meeting_button_pressed"]
-[connection signal="pressed" from="VoteForButton" to="PlayerController" method="_on_vote_for_button_pressed"]
-[connection signal="pressed" from="VoteAgainstButton" to="PlayerController" method="_on_vote_against_button_pressed"]
 [connection signal="pressed" from="BidButton" to="PlayerController" method="_on_bid_button_pressed"]

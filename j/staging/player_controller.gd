@@ -21,12 +21,16 @@ var clientState: ClientState = ClientState.Connecting
 var myLobbyId
 var myPlayerId
 var currentPlayer
+var bidPlayer
 
 var playerHands
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	joinButton.pressed.connect(_do_join)
+	$"../EmergencyMeeting".emergency.connect(_on_emergency_meeting_button_pressed)
+	$"../EmergencyMeeting".vote_no_bs.connect(_on_vote_for_button_pressed)
+	$"../EmergencyMeeting".vote_bs.connect(_on_vote_against_button_pressed)
 
 func _on_connect_button_pressed() -> void:
 	var host = $"../LobbyStuff/ConnectText".text
@@ -64,6 +68,14 @@ func _handle_rsp(text: String) -> void:
 		return
 	var d = json.data
 	print(d)
+	
+	if "gameStateUpdateEvent" in d:
+		var event = d.gameStateUpdateEvent
+		if event.eventType == "RoundStart" or event.eventType == 0:
+			bidPlayer = null
+			currentPlayer = null
+			$"../EmergencyMeeting".reset()
+	
 	if "lobbyList" in d:
 		lobbyList.clear()
 		itemMap = {}
@@ -97,10 +109,17 @@ func _handle_rsp(text: String) -> void:
 			$"../BidButton".visible = true
 		else:
 			$"../BidButton".visible = false
+	
+	if "bidPlayer" in d:
+		bidPlayer = d.bidPlayer
+		$"../EmergencyMeeting".update_button(myPlayerId, bidPlayer)
 		
 	if "bid" in d:
 		var bid = d.bid
 		$"../BidMpregs".set_cards(bid)
+		
+	if "emergencyMeeting" in d:
+		$"../EmergencyMeeting".update_state(myPlayerId, bidPlayer, d.emergencyMeeting)
 
 func _process_socket() -> void:
 	if clientState == ClientState.Failed: return
