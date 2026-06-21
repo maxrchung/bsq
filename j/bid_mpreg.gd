@@ -14,9 +14,10 @@ func get_card():
 	if $SuitDropdown.selected < 0 or $NumberDropdown.selected < 0:
 		return
 	
+	var suit = $SuitDropdown.get_item_text($SuitDropdown.selected)
+	var value = $NumberDropdown.get_item_text($NumberDropdown.selected)
 	var card = {
-		"suit": $SuitDropdown.get_item_text($SuitDropdown.selected),
-		"value": $NumberDropdown.get_item_text($NumberDropdown.selected)
+		suit: value
 	}
 	return card
 
