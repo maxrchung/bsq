@@ -57,12 +57,14 @@ public record EmergencyMeetingInfo
     public required IReadOnlyList<Guid> VotesAgainst { get; init; } = [];
 }
 
-public record RoundInfo {
+public record RoundInfo
+{
     public required int RoundNumber { get; init; }
     public required LobbyPlayer ActivePlayer { get; init; }
 }
 
-public record GameStateUpdateEvent {
+public record GameStateUpdateEvent
+{
 
     public enum Type
     {
@@ -96,11 +98,8 @@ public record RpcResponse
 
     public EmergencyMeetingInfo? EmergencyMeeting { get; set; }
 
-<<<<<<< HEAD
     public IReadOnlyList<Card>? Bid { get; set; }
-=======
     public GameStateUpdateEvent? GameStateUpdateEvent { get; set; }
->>>>>>> 43b2ea5 (server sends gamestateupdateevent so u know what ROUND u are)
 
     public string? Error { get; set; }
 }
