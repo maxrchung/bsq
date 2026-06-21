@@ -191,6 +191,7 @@ func _handle_rsp(text: String) -> void:
 	if "emergencyMeeting" in d:
 		$"../EmergencyMeeting".update_state(myPlayerId, bidPlayer, d.emergencyMeeting)
 		$"../BidButton".visible = false
+		$"../BidMpregs".enable(false)
 
 func _process_socket() -> void:
 	
