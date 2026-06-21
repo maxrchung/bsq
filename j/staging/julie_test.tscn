@@ -2,12 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="1_766oo"]
 [ext_resource type="Script" uid="uid://cod47o4arki83" path="res://staging/player_controller.gd" id="1_ru61t"]
+[ext_resource type="AudioStream" uid="uid://dq7iqjj05ieqw" path="res://assets/sounds/Click_stereo.ogg.mp3" id="3_5c5ks"]
 [ext_resource type="Script" uid="uid://bbeffmus5r6m1" path="res://staging/player_infos.gd" id="3_8y7d7"]
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
 [ext_resource type="PackedScene" uid="uid://c5yj2r1lrorg" path="res://bid_mpregs.tscn" id="6_nh24k"]
 [ext_resource type="PackedScene" uid="uid://erf1mvugrkjm" path="res://emergency_meeting.tscn" id="7_766oo"]
 [ext_resource type="PackedScene" uid="uid://c5al5ipri7xm4" path="res://instructions.tscn" id="8_mnxgi"]
+[ext_resource type="AudioStream" uid="uid://b22pi56hn2yvy" path="res://assets/sounds/alarm.ogg" id="10_cyny5"]
+[ext_resource type="AudioStream" uid="uid://bd18sw42ip05j" path="res://assets/sounds/bgm.ogg" id="11_cyny5"]
 
 [node name="Node2D" type="Node2D" unique_id=866605961]
 
@@ -172,6 +175,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Instructions" parent="." unique_id=1370419733 instance=ExtResource("8_mnxgi")]
+
+[node name="generic_click" type="AudioStreamPlayer" parent="." unique_id=1196499734]
+stream = ExtResource("3_5c5ks")
+
+[node name="Emergency_sfx" type="AudioStreamPlayer" parent="." unique_id=44115308]
+stream = ExtResource("10_cyny5")
+
+[node name="bgm_sfx" type="AudioStreamPlayer" parent="." unique_id=1802988808]
+stream = ExtResource("11_cyny5")
+autoplay = true
 
 [connection signal="pressed" from="LobbyStuff/CreateButton" to="PlayerController" method="_on_create_button_pressed"]
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]

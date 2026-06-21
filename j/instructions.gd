@@ -1,4 +1,5 @@
 extends Node2D
+@onready var generic_click: AudioStreamPlayer = $"../generic_click"
 
 
 var is_open = false
@@ -14,7 +15,7 @@ func _process(delta: float) -> void:
 
 func _on_trigger_button_pressed() -> void:
 	is_open = not is_open
-	
+	generic_click.play()
 	if is_open:
 		$Background.visible = true
 		$BodyText.visible = true

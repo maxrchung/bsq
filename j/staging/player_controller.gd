@@ -3,6 +3,8 @@ extends Node
 @export var nameField: LineEdit
 @export var joinButton: Button
 @export var lobbyList: ItemList
+@onready var generic_click: AudioStreamPlayer = $"../generic_click"
+@onready var emergency_sfx: AudioStreamPlayer = $"../Emergency_sfx"
 
 var socket = WebSocketPeer.new()
 var json = JSON.new()
@@ -38,7 +40,7 @@ func _ready() -> void:
 func _on_connect_button_pressed() -> void:
 	socket.close()
 	socket = WebSocketPeer.new()
-	
+	generic_click.play()
 	var host = $"../LobbyStuff/ConnectText".text
 	socket.connect_to_url("ws://" + host + ":5092/api/v1/game/socket")
 	clientState = ClientState.Connecting
@@ -69,6 +71,7 @@ func _do_join() -> void:
 	
 	var lobbyId = itemMap[lobbyList.get_selected_items()[0]]
 	print("joining ", lobbyId, " as ", name)
+	generic_click.play()
 	_invoke("join", {"lobbyId": lobbyId, "playerName": name})
 	$"../LobbyStuff".visible = false
 	
@@ -233,21 +236,25 @@ func _on_start_button_pressed() -> void:
 	if not playerHands or playerHands.size() < 2:
 		print('preventing start game because too few people')
 		return
-	
+	generic_click.play()
 	_invoke("invokeCtl", "StartGame")
 	
 
 func _on_emergency_meeting_button_pressed() -> void:
+	emergency_sfx.play()
 	_invoke("invokeCtl", "EmergencyMeetingVoteAgainst")
 
 func _on_vote_for_button_pressed() -> void:
+	generic_click.play()
 	_invoke("invokeCtl", "EmergencyMeetingVoteFor")
 
 func _on_vote_against_button_pressed() -> void:
+	generic_click.play()
 	_invoke("invokeCtl", "EmergencyMeetingVoteAgainst")
 
 
 func _on_bid_button_pressed() -> void:
+	generic_click.play()
 	var cards = $"../BidMpregs".get_cards()
 	
 	if cards.size() == 0:
@@ -265,7 +272,7 @@ func _on_create_button_pressed() -> void:
 		
 	if clientState != ClientState.Idle:
 		return
-		
+	generic_click.play()
 	_invoke("create", {"playerName": name})
 		
 	$"../LobbyStuff".visible = false
@@ -276,4 +283,6 @@ func _on_create_button_pressed() -> void:
 	$"../QuitButton".visible = true
 
 func _on_quit_button_pressed() -> void:
+	generic_click.play()
+	await get_tree().create_timer(1.0).timeout
 	get_tree().reload_current_scene()
