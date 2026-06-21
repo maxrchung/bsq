@@ -49,8 +49,6 @@ public class GameLobby
     private readonly GameBoard _board = new();
 
     private readonly List<GameLobbyPlayer> _players = new();
-    private List<GameLobbyPlayer> _active_players = new ();
-    private List<GameLobbyPlayer> _inactive_players = new ();
     private int _player_index = 0;
 
     public readonly string Name;
@@ -136,7 +134,7 @@ public class GameLobby
             };
             await Task.WhenAll(_players.Select(player => player.Channel.Send(response)).ToList());
         } else {
-            var winner = CalculateWinner(_active_players);
+            var winner = CalculateWinner(_players);
             var response = new RpcResponse
             {
                 Id = 0,
@@ -172,14 +170,14 @@ public class GameLobby
     }
 
     public async Task SetTurn(GamePlayer loser) {
-        var active_player_ids = new List<Guid>();
-        foreach (var player in _active_players) {
-            active_player_ids.Add(player.Id);
+        var player_ids = new List<Guid>();
+        foreach (var player in _players) {
+            player_ids.Add(player.Id);
         }
 
-        if (active_player_ids.Contains(loser.Id)) {
-            _player_index = active_player_ids.IndexOf(loser.Id);
-            var current_player = _active_players[_player_index];
+        if (player_ids.Contains(loser.Id)) {
+            _player_index = player_ids.IndexOf(loser.Id);
+            var current_player = _players[_player_index];
             if (_board.GetBidPlayer() is null) {
                 await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
             } else {
@@ -187,8 +185,8 @@ public class GameLobby
             }
         } else {
             _player_index += 1;
-            _player_index = _player_index % _active_players.Count;
-            var current_player = _active_players[_player_index];
+            _player_index = _player_index % _players.Count;
+            var current_player = _players[_player_index];
             if (_board.GetBidPlayer() is null) {
                 await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
             } else {
@@ -199,8 +197,8 @@ public class GameLobby
 
     public async Task NextTurn() {
         _player_index += 1;
-        _player_index = _player_index % _active_players.Count;
-        var current_player = _active_players[_player_index];
+        _player_index = _player_index % _players.Count;
+        var current_player = _players[_player_index];
         if (_board.GetBidPlayer() is null) {
             await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
         } else {
@@ -223,7 +221,7 @@ public class GameLobby
         if (_board.ValidateBid(bid))
         {
             _board.SetBid(bid);
-            _board.SetBidPlayer(_active_players[_player_index].GamePlayer);
+            _board.SetBidPlayer(_players[_player_index].GamePlayer);
             await InvokeAll(new RpcResponse {Id = 0, Bid = bid });
             await NextTurn();
             return true;
@@ -232,7 +230,7 @@ public class GameLobby
     }
 
     public async Task MeetingEnd() {
-        if (_emergencyMeeting.VotesFor.Count + _emergencyMeeting.VotesAgainst.Count < _active_players.Count) {
+        if (_emergencyMeeting.VotesFor.Count + _emergencyMeeting.VotesAgainst.Count < _players.Count) {
             return;
         }
 
@@ -263,19 +261,10 @@ public class GameLobby
     }
 
     public async Task UpdateGame() {
-        var new_inactive_players = new List<GameLobbyPlayer>();
-        foreach (var player in _active_players) {
+        foreach (var player in _players) {
             if (player.GamePlayer.Score >= SCORE_LIMIT) {
                 await UpdateGameState(GameStateUpdateEvent.Type.GameOver);
             }
-            if (player.GamePlayer.HandSize >= HAND_LIMIT) {
-                new_inactive_players.Add(player);
-            }
-        }
-
-        foreach (var inactive_player in new_inactive_players) {
-            _inactive_players.Add(inactive_player);
-            _active_players.Remove(inactive_player);
         }
     }
 
@@ -322,10 +311,9 @@ public class GameLobby
     {
         if (type == InvokeCtlType.StartGame)
         {
-            _active_players = _players;
             await UpdateDeck();
             await NextRound();
-            var current_player = _active_players[_player_index];
+            var current_player = _players[_player_index];
             await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
         }
         else if (type == InvokeCtlType.EmergencyMeetingVoteFor)
