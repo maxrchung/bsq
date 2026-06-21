@@ -100,7 +100,7 @@ void fragment() {
 	vec4 orig = texture(TEXTURE, UV);
 	vec3 origOk = rgb_to_oklch(orig.rgb);
 	origOk.y = 1.f;
-	origOk.z += brightness * 256.f;
+	origOk.z += brightness * 128.f;
 	
 	COLOR = vec4(oklch_to_rgb(origOk), orig.a);
 }
