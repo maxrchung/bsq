@@ -68,8 +68,7 @@ func _do_join() -> void:
 	$"../PlayersLabel".visible = true
 	$"../PlayerInfos".visible = true
 	$"../StartButton".visible = true
-
-	
+	$"../QuitButton".visible = true
 
 func _handle_rsp(text: String) -> void:
 	var err = json.parse(text)
@@ -223,3 +222,13 @@ func _on_create_button_pressed() -> void:
 		
 	if clientState != ClientState.Idle:
 		return
+		
+	$"../LobbyStuff".visible = false
+	$"../LobbyNameLabel".visible = true
+	$"../PlayersLabel".visible = true
+	$"../PlayerInfos".visible = true
+	$"../StartButton".visible = true
+	$"../QuitButton".visible = true
+
+func _on_quit_button_pressed() -> void:
+	get_tree().reload_current_scene()
