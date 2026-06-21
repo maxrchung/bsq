@@ -280,9 +280,10 @@ public class GameLobby
     }
 
     public void Penalize(List<GamePlayer> players) {
+        var points = _board.GetBidValue() / players.Count;
         foreach (var player in players) {
             player.IncreaseHandSize();
-            player.DecreasePoints(_board.GetBidValue());
+            player.DecreasePoints(points);
         }
     }
 

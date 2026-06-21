@@ -100,11 +100,8 @@ public class GameBoard
         foreach (var bid_card in bid_effective_cards) {
             var bid_card_suit = bid_card.Suit;
             var bid_card_value = bid_card.Value;
-            Console.WriteLine("we are looking for " + bid_card_suit.ToString());
-            Console.WriteLine("we are looking for " + bid_card_value.ToString());
 
             foreach (var (card, is_used) in hand_dict) {
-                Console.WriteLine("we are checking" + card.Suit.ToString() + " | " + card.Value.ToString());
                 if (bid_card_suit.CanBeUsedAs(card.Suit) && bid_card_value.CanBeUsedAs(card.Value) && !is_used) {
                     hand_dict[card] = true;
                     total_found += 1;
