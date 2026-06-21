@@ -1,5 +1,7 @@
 extends TextureRect
 
+class_name PlayingCard
+
 @export var suit: SuitName = SuitName.Spade:
 	set(v):
 		suit = v
@@ -8,9 +10,9 @@ extends TextureRect
 	set(v):
 		value = v
 		_update_material()
-@export var faceUp = true:
+@export var face_up = true:
 	set(v):
-		faceUp = v
+		face_up = v
 		_update_material()
 
 enum SuitName {
@@ -20,6 +22,8 @@ enum SuitName {
 	Diamond = 3,
 }
 
+const SuitMap = [SuitName.Spade, SuitName.Heart, SuitName.Club, SuitName.Diamond]
+
 func _calc_offsets(suit: SuitName, value: int) -> Vector2i:
 	return Vector2i(value - 2, int(suit))
 
@@ -27,12 +31,12 @@ func _update_material():
 	print("updating materials")
 	print(get_instance_shader_parameter("Offset"))
 	set_instance_shader_parameter("Offset", _calc_offsets(suit, value))
-	set_instance_shader_parameter("FacingUp", faceUp)
+	set_instance_shader_parameter("FacingUp", face_up)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_update_material()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

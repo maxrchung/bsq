@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bg6hoi1sxwl2v"]
 
 [ext_resource type="Script" uid="uid://ck4qjfmno4tqo" path="res://hand.gd" id="1_u4p2i"]
-[ext_resource type="PackedScene" uid="uid://bgkp7s3hosgxu" path="res://objects/playing_card.tscn" id="2_bfasp"]
+[ext_resource type="PackedScene" uid="uid://deckn0bcnq22x" path="res://objects/PlayingCard.tscn" id="2_bfasp"]
 
 [node name="Hand" type="Node2D" unique_id=1932947453]
 script = ExtResource("1_u4p2i")
@@ -28,6 +28,12 @@ offset_bottom = 634.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Hide"
+
+[node name="PlayingCard" parent="." unique_id=1546708771 instance=ExtResource("2_bfasp")]
+offset_left = 148.0
+offset_top = 238.0
+offset_right = 273.0
+offset_bottom = 413.0
 
 [connection signal="pressed" from="RandomizeButton" to="." method="randomize_cards"]
 [connection signal="pressed" from="ShowButton" to="." method="_on_button_pressed"]

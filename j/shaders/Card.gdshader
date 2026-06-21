@@ -5,8 +5,8 @@ instance uniform bool FacingUp = true;
 
 const vec2 uvScale = vec2(125.f / 2048.f, 175.f / 2048.f);
 
-uniform float SPEED = 0.5f;
-uniform float AMPLITUDE = 5.f;
+uniform float SPEED = 1.5f;
+uniform float AMPLITUDE = 3.f;
 
 const float VERTEX_OFFSET = 0.2f;
 

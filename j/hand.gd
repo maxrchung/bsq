@@ -44,7 +44,7 @@ func update_cards(cards):
 	
 	for i in count:
 		var card = card_scene.instantiate()
-		card.suit = PlayingCard.Suit[cards[i]["suit"]]
+		card.suit = PlayingCard.SuitName[cards[i]["suit"]]
 		
 		var value = cards[i]["value"]
 		var number = 2;
@@ -76,10 +76,10 @@ func update_cards(cards):
 		elif value == "Ace":
 			number = 14
 		
-		card.number = number
+		card.value = number
 		card.position = Vector2(
-			left + i * 50,
-			screen_size.y + 50
+			(left + i * 50) - (250 / 2),
+			screen_size.y - 75
 		)
 		if is_shown:
 			card.face_up = true
@@ -101,12 +101,12 @@ func randomize_cards():
 	for i in count:
 		cards[i] = {
 			"suit": [
-				PlayingCard.Suit.Spade,
-				PlayingCard.Suit.Heart,
-				PlayingCard.Suit.Club,
-				PlayingCard.Suit.Diamond,
+				PlayingCard.SuitName.Spade,
+				PlayingCard.SuitName.Heart,
+				PlayingCard.SuitName.Club,
+				PlayingCard.SuitName.Diamond,
 			].pick_random(),
-			"number": randi_range(2, 14)
+			"value": randi_range(2, 14)
 		}
 		
 	update_cards(cards)

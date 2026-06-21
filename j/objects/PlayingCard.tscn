@@ -6,15 +6,16 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yei77"]
 shader = ExtResource("1_pueil")
-shader_parameter/SPEED = 0.5
-shader_parameter/AMPLITUDE = 5.0
+shader_parameter/SPEED = 1.5
+shader_parameter/AMPLITUDE = 3.0
 
 [node name="PlayingCard" type="TextureRect" unique_id=1546708771]
 texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_yei77")
-offset_right = 125.0
-offset_bottom = 175.0
+offset_right = 250.0
+offset_bottom = 350.0
+mouse_filter = 2
 texture = ExtResource("2_2wr72")
 expand_mode = 1
 script = ExtResource("3_2wr72")
