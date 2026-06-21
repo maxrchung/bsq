@@ -31,7 +31,7 @@ func set_cards(cards):
 		
 	for i in 5:
 		var bid = bid_scene.instantiate()
-		bid.position = Vector2(i * 120, 0)
+		bid.position = Vector2(i * 130, 0)
 		
 		if i < cards.size():
 			var card = cards[i]

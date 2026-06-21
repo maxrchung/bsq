@@ -6,36 +6,40 @@
 script = ExtResource("1_ybcmp")
 
 [node name="EmergencyButton" type="Button" parent="." unique_id=1269895082]
-offset_top = 19.0
-offset_right = 182.0
-offset_bottom = 50.0
-text = "Emergency Meeting"
+offset_top = 36.0
+offset_right = 222.0
+offset_bottom = 67.0
+text = "Emergency Meeting!"
+metadata/_edit_use_anchors_ = true
 
 [node name="NotBsLabel" type="Label" parent="." unique_id=469924403]
 offset_left = 104.0
-offset_top = 95.0
-offset_right = 171.0
-offset_bottom = 118.0
+offset_top = 40.0
+offset_right = 186.0
+offset_bottom = 63.0
 text = "NOT BS: "
+metadata/_edit_use_anchors_ = true
 
 [node name="BsLabel" type="Label" parent="." unique_id=1194557584]
 offset_left = 104.0
-offset_top = 59.0
+offset_top = 5.0
 offset_right = 144.0
-offset_bottom = 82.0
+offset_bottom = 28.0
 text = "BS: "
+metadata/_edit_use_anchors_ = true
 
 [node name="NoBsButton" type="Button" parent="." unique_id=1308671377]
-offset_top = 95.0
+offset_top = 36.0
 offset_right = 94.0
-offset_bottom = 126.0
+offset_bottom = 67.0
 text = "No BS"
+metadata/_edit_use_anchors_ = true
 
 [node name="BsButton" type="Button" parent="." unique_id=508172740]
-offset_top = 59.0
 offset_right = 94.0
-offset_bottom = 90.0
+offset_bottom = 31.0
 text = "BS"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="EmergencyButton" to="." method="on_emergency_press"]
 [connection signal="pressed" from="NoBsButton" to="." method="on_not_bs_press"]

@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bcqs1n284i0kq"]
 
 [ext_resource type="Script" uid="uid://cod47o4arki83" path="res://staging/player_controller.gd" id="1_ru61t"]
-[ext_resource type="PackedScene" uid="uid://bgkp7s3hosgxu" path="res://objects/playing_card.tscn" id="2_fu00b"]
 [ext_resource type="Script" uid="uid://bbeffmus5r6m1" path="res://staging/player_infos.gd" id="3_8y7d7"]
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
@@ -20,10 +19,10 @@ lobbyList = NodePath("../LobbyStuff/ItemList")
 
 [node name="LineEdit" type="LineEdit" parent="LobbyStuff" unique_id=437873862]
 offset_left = 9.0
-offset_top = 213.0
+offset_top = 249.0
 offset_right = 145.0
-offset_bottom = 244.0
-placeholder_text = "Player name"
+offset_bottom = 287.0
+placeholder_text = "Name"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LobbyStuff" unique_id=1498088175]
 offset_left = 176.0
@@ -32,63 +31,47 @@ offset_right = 386.0
 offset_bottom = 255.0
 
 [node name="Button" type="Button" parent="LobbyStuff" unique_id=1572874277]
-offset_left = 158.0
-offset_top = 213.0
-offset_right = 241.0
-offset_bottom = 244.0
+offset_left = 159.0
+offset_top = 249.0
+offset_right = 259.0
+offset_bottom = 287.0
 text = "Join"
+
+[node name="Button" type="Button" parent="LobbyStuff/Button" unique_id=331745891]
+layout_mode = 0
+offset_left = 114.0
+offset_right = 214.0
+offset_bottom = 38.0
+text = "Create"
 
 [node name="ItemList" type="ItemList" parent="LobbyStuff" unique_id=810656343]
 offset_left = 9.0
-offset_top = 54.0
-offset_right = 366.0
-offset_bottom = 209.0
+offset_top = 73.0
+offset_right = 474.0
+offset_bottom = 228.0
+auto_width = true
 
 [node name="ConnectButton" type="Button" parent="LobbyStuff" unique_id=1155131296]
-offset_left = 241.0
+offset_left = 209.0
 offset_top = 12.0
-offset_right = 313.0
-offset_bottom = 43.0
+offset_right = 309.0
+offset_bottom = 50.0
 text = "Connect"
 
 [node name="ConnectText" type="TextEdit" parent="LobbyStuff" unique_id=332784921]
 offset_left = 9.0
-offset_top = 12.0
-offset_right = 226.0
-offset_bottom = 47.0
+offset_top = 13.0
+offset_right = 195.0
+offset_bottom = 50.0
 text = "localhost"
 placeholder_text = "localhost"
 
-[node name="PlayingCard" parent="." unique_id=592686736 instance=ExtResource("2_fu00b")]
-visible = false
-position = Vector2(578, 190)
-suit = 2
-number = 7
-
-[node name="SendJsonText" type="TextEdit" parent="." unique_id=1619381570]
-offset_left = 766.0
-offset_top = 13.0
-offset_right = 978.0
-offset_bottom = 198.0
-text = "{
-\"getInfo\": \"lobbies\",
-\"id\":0
-}"
-
 [node name="RoundNumberLabel" type="Label" parent="." unique_id=495663999]
-visible = false
-offset_left = 766.0
-offset_top = 213.0
-offset_right = 894.0
-offset_bottom = 236.0
+offset_left = 937.0
+offset_top = 12.0
+offset_right = 1095.0
+offset_bottom = 35.0
 text = "Round Number: "
-
-[node name="SendJsonButton" type="Button" parent="." unique_id=2004457102]
-offset_left = 990.0
-offset_top = 13.0
-offset_right = 1140.0
-offset_bottom = 54.0
-text = "Send JSON request"
 
 [node name="LobbyIdText" type="Label" parent="." unique_id=1002534460]
 visible = false
@@ -133,20 +116,19 @@ visible = false
 
 [node name="BidMpregs" parent="." unique_id=176062230 instance=ExtResource("6_nh24k")]
 visible = false
-position = Vector2(453, 287)
+position = Vector2(495, 287)
 
 [node name="BidButton" type="Button" parent="." unique_id=1883378963]
 visible = false
-offset_left = 453.0
-offset_top = 363.0
-offset_right = 545.0
-offset_bottom = 394.0
+offset_left = 495.0
+offset_top = 370.0
+offset_right = 607.0
+offset_bottom = 401.0
 text = "Submit bid"
 
 [node name="EmergencyMeeting" parent="." unique_id=1828152688 instance=ExtResource("7_766oo")]
-position = Vector2(9, 499)
+position = Vector2(9, 570)
 
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]
-[connection signal="pressed" from="SendJsonButton" to="PlayerController" method="_on_send_json_button_pressed"]
 [connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]
 [connection signal="pressed" from="BidButton" to="PlayerController" method="_on_bid_button_pressed"]

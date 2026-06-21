@@ -27,6 +27,10 @@ project/assembly_name="j"
 
 enabled=PackedStringArray("res://addons/godobuf/plugin.cfg")
 
+[gui]
+
+theme/custom_font="uid://b7hn1sf4gok88"
+
 [input]
 
 render_hand={
