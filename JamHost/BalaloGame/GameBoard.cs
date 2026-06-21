@@ -15,11 +15,8 @@ public class GameBoard
     public int _bidValue = 0;
     public GamePlayer _bidPlayer;
 
-    public int RoundNumber { get; private set; } = 0;
-
     public void NextRound()
     {
-        RoundNumber++;
         var cards = Enumerable.Range(0, _deck.Size).Shuffle().ToList();
         var offset = 0;
         foreach (var player in _players)

@@ -7,8 +7,13 @@ var hand_size: int
 @onready var label: RichTextLabel = $Sprite2D/RichTextLabel
 @onready var spawnPath: Path2D = $SpawnPath
 
+## CARD FAN CONSTANTS
+# card separation distance and scale
 var carddist_offset: float = 0.8 # ratio of card width apart that cards spawn
 var cardscale: float = 0.15 
+# maximum rotation angle for card fan
+var max_card_rotation_deg: float = 15.0 
+var max_card_rotation_rad: float = deg_to_rad(max_card_rotation_deg)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,11 +37,12 @@ func render_hand() -> void:
 	var total_length = curve.get_baked_length()
 
 func spawn_along_curve(count: int) -> void:
-	var spawn_distance = carddist_offset*Card.width*cardscale
+	var spawn_distance = carddist_offset * Card.width * cardscale
 	var curve: Curve2D = spawnPath.curve
-	#var count = hand.size()
 	if curve.get_baked_points().size() == 0:
 		return
+
+	
 
 	# 1. Calculate the starting horizontal offset relative to the Path2D's local origin
 	var start_offset_x: float = (count - 1) * spawn_distance / 2.0
@@ -48,10 +54,21 @@ func spawn_along_curve(count: int) -> void:
 		# 3. Find the matching Y coordinate on the curve for this target X
 		var target_y: float = get_y_at_x(curve, target_x)
 		
-		# 4. Instance and position the object
+		# 4. Calculate rotation factor from -1.0 (leftmost) to 1.0 (rightmost)
+		var rotation_factor: float = 0.0
+		if count > 1:
+			# Maps i from [0, count-1] to [-1.0, 1.0]
+			rotation_factor = (i / (count - 1.0)) * 2.0 - 1.0
+		
+		# Leftmost rotates CCW (negative angle), rightmost rotates CW (positive angle)
+		var target_rotation: float = rotation_factor * max_card_rotation_rad
+		
+		# 5. Instance, position, and rotate the object
 		var instance = Card.make_card(false)
 		instance.position = Vector2(target_x, target_y)
 		instance.scale = Vector2(cardscale, cardscale)
+		instance.rotation = target_rotation # Apply the fan rotation
+		
 		add_child(instance)
 		
 # Helper function to sample the curve's Y value at a specific X coordinate

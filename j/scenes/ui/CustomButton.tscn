@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cdcxdxubxljtg"]
+
+[ext_resource type="Texture2D" uid="uid://beqfo0cjxlnde" path="res://assets/button.png" id="1_l52tk"]
+
+[node name="CustomButton" type="Control" unique_id=110223267]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1006186526]
+layout_mode = 0
+offset_right = 156.0
+offset_bottom = 97.0
+texture = ExtResource("1_l52tk")
+region_rect = Rect2(51, 42, 156, 156)
+patch_margin_left = 20
+patch_margin_top = 30
+patch_margin_right = 20
+patch_margin_bottom = 30
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2

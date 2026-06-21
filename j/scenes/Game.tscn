@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://cq35etfnqi5vs"]
 
 [ext_resource type="Script" uid="uid://c50qixbk1hooa" path="res://scripts/GameManager.gd" id="1_ibkli"]
+[ext_resource type="Texture2D" uid="uid://dwxls0hakevgl" path="res://assets/logo.png" id="2_qbsmt"]
+[ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="3_cpr0p"]
 
 [sub_resource type="Curve2D" id="Curve2D_irtva"]
 bake_interval = 1.0
 _data = {
-"points": PackedVector2Array(-0.2709091, 48.736717, 0, -10, 0, 100, -20, 0, 20, 0, 50, 80, 0, -10, 0, 49.82087, 100, 100)
+"points": PackedVector2Array(-6.363636, 3.3636365, 6.363636, -3.3636365, 9.599999, 95.899994, -15.523, 0.12100001, 15.523, -0.12100001, 56.799995, 90.799995, -8.396909, -3.7599094, 8.396909, 3.7599094, 107.09999, 96.899994)
 }
 point_count = 3
 
@@ -15,6 +17,24 @@ spawn_path = NodePath("SpawnPath")
 NUM_PLAYERS = 7
 
 [node name="SpawnPath" type="Path2D" parent="." unique_id=532965899]
-position = Vector2(87.99999, -697.99994)
+position = Vector2(1.6155871e-27, -752)
 scale = Vector2(10, 10)
 curve = SubResource("Curve2D_irtva")
+
+[node name="Logo" type="Sprite2D" parent="." unique_id=1492417543]
+visible = false
+texture_filter = 1
+position = Vector2(584, 254)
+scale = Vector2(2.2, 2.2)
+texture = ExtResource("2_qbsmt")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1626650095]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_cpr0p")

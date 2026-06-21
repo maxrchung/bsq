@@ -61,6 +61,7 @@ public record RoundInfo
 {
     public required int RoundNumber { get; init; }
     public required LobbyPlayer ActivePlayer { get; init; }
+    public IReadOnlyList<PlayerHandInfo>? PlayerHands { get; set; }
 }
 
 public record GameStateUpdateEvent
