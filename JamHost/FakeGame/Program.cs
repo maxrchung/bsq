@@ -9,7 +9,7 @@ List<Card> hand1 =
 PrintHand(hand1);
 
 var game = new GameBoard();
-var p1 = game.AddPlayer();
+var p1 = game.AddPlayer(Guid.NewGuid());
 p1.HandSize = 5;
 
 for (var i = 0; i < 10; i++)
