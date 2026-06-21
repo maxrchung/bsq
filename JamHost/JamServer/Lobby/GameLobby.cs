@@ -57,7 +57,7 @@ public class GameLobby
     private readonly EmergencyMeetingState _emergencyMeeting = new();
 
     public const int HAND_LIMIT = 67; // Setting this real high to avoid some weird die cases
-    public const int SCORE_LIMIT = 50;
+    public const int SCORE_LIMIT = 1000;
     public const int MAX_ROUNDS = 6;
 
 
@@ -222,7 +222,7 @@ public class GameLobby
         // false == not bs, the bid is valid
         // true == bs, bid is not valid
         if (result) {
-            Penalize(new List<GamePlayer>() { _players[_player_index].GamePlayer}); // penalize the person that bid
+            Penalize(new List<GamePlayer>() { _board.GetBidPlayer() }); // penalize the person that bid
             Reward(_emergencyMeeting.VotesAgainst);
         }
         else {
@@ -256,8 +256,9 @@ public class GameLobby
     }
 
     public void Reward(List<GamePlayer> players) {
+        var points = _board.GetBidValue() / players.Count;
         foreach (var player in players) {
-            player.IncreasePoints(_board.GetBidValue());
+            player.IncreasePoints(points);
         }
     }
 

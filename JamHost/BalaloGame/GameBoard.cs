@@ -69,28 +69,53 @@ public class GameBoard
     }
 
     public int CalculateValue(List<Card> bid) {
-        var score = MatchFinder.GetScoringType(bid);
+        var score = MatchFinder.GetScoringType(bid, true);
         return score.CalculateBaseScore();
     }
 
     public bool CheckBs() {
-        var cards_in_play = new List<Card>();
+        var total_hands = new List<Card>();
         foreach (var player in _players) {
-            cards_in_play.AddRange(player.HandCards);
+            total_hands.AddRange(player.HandCards);
+        }
+        
+        Dictionary<Card, bool> hand_dict = new Dictionary<Card, bool>();
+        foreach (var card in total_hands) {
+            hand_dict.Add(card, false);
         }
 
-        var bid_copy = new List<Card>(_bid);
+        // need to replace bid values
+        List<Card> cleaned_bid = new List<Card>();
         foreach (var bid_card in _bid) {
-            if (cards_in_play.Contains(bid_card)) {
-                bid_copy.Remove(bid_card);
-                cards_in_play.Remove(bid_card);
+            CardSuit new_suit = bid_card.Suit == CardSuit.None ? CardSuit.Star : bid_card.Suit;
+            CardValue new_value = bid_card.Value == CardValue.None ? CardValue.Question : bid_card.Value;
+            Card new_card = new(new_value, new_suit);
+            cleaned_bid.Add(new_card);
+        }
+        EffectiveHand bid_effective_hand = new EffectiveHand(cleaned_bid);
+        var score = MatchFinder.GetScoringType(bid_effective_hand, false);
+        var bid_effective_cards = score.Cards;
+
+        var total_found = 0;
+        foreach (var bid_card in bid_effective_cards) {
+            var bid_card_suit = bid_card.Suit;
+            var bid_card_value = bid_card.Value;
+            Console.WriteLine("we are looking for " + bid_card_suit.ToString());
+            Console.WriteLine("we are looking for " + bid_card_value.ToString());
+
+            foreach (var (card, is_used) in hand_dict) {
+                Console.WriteLine("we are checking" + card.Suit.ToString() + " | " + card.Value.ToString());
+                if (bid_card_suit.CanBeUsedAs(card.Suit) && bid_card_value.CanBeUsedAs(card.Value) && !is_used) {
+                    hand_dict[card] = true;
+                    total_found += 1;
+                    break;
+                }
             }
         }
 
-        if (bid_copy.Count == 0) {
-            return false;
+        if (total_found != bid_effective_cards.Count) {
+            return true;
         }
-
-        return true;
+        return false;
     }
 }

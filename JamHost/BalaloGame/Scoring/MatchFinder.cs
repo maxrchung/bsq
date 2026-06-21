@@ -172,10 +172,10 @@ public class EffectiveHand
         return result.OrderByDescending(x => x.Size).ToList();
     }
 
-    public ScoredMatch BuildCardResult(ScoringType type) => new()
+    public ScoredMatch BuildCardResult(ScoringType type, bool force) => new()
     {
         Type = type,
-        Cards = _cards.Select(x => x.ForcedConcrete()).ToList(),
+        Cards = force ? _cards.Select(x => x.ForcedConcrete()).ToList() : _cards.ToList(),
     };
 }
 
@@ -187,9 +187,9 @@ public static class MatchFinder
         return straight.MergeWith(flush);
     }
     
-    public static ScoredMatch GetScoringType(IEnumerable<Card> cards) => GetScoringType(new EffectiveHand(cards));
+    public static ScoredMatch GetScoringType(IEnumerable<Card> cards, bool force) => GetScoringType(new EffectiveHand(cards), force);
 
-    public static ScoredMatch GetScoringType(EffectiveHand hand)
+    public static ScoredMatch GetScoringType(EffectiveHand hand, bool force)
     {
         // straights and flushes
         var maybeStraight = hand.TryForceStraight();
@@ -201,7 +201,7 @@ public static class MatchFinder
 
         if (highestOfAKind == 5)
         {
-            return ofAKindList.First().BuildCardResult(ScoringType.FiveOfAKind);
+            return ofAKindList.First().BuildCardResult(ScoringType.FiveOfAKind, force=force);
         }
 
         if (maybeStraightFlush != null)
@@ -209,39 +209,39 @@ public static class MatchFinder
             return maybeStraightFlush.BuildCardResult(
                 maybeStraightFlush.HighestConcreteValue == CardValue.Ace
                     ? ScoringType.RoyalFlush
-                    : ScoringType.StraightFlush);
+                    : ScoringType.StraightFlush, force=force);
         }
 
         if (highestOfAKind == 4)
         {
-            return ofAKindList.First().BuildCardResult(ScoringType.FourOfAKind);
+            return ofAKindList.First().BuildCardResult(ScoringType.FourOfAKind, force=force);
         }
 
         // TODO: full house
         if (maybeFlush != null)
         {
-            return maybeFlush.BuildCardResult(ScoringType.Flush);
+            return maybeFlush.BuildCardResult(ScoringType.Flush, force=force);
         }
 
         if (maybeStraight != null)
         {
-            return maybeStraight.BuildCardResult(ScoringType.Straight);
+            return maybeStraight.BuildCardResult(ScoringType.Straight, force=force);
         }
 
         if (highestOfAKind == 3)
         {
-            return ofAKindList.First().BuildCardResult(ScoringType.ThreeOfAKind);
+            return ofAKindList.First().BuildCardResult(ScoringType.ThreeOfAKind, force=force);
         }
 
         if (highestOfAKind == 2)
         {
-            return ofAKindList.First().BuildCardResult(ScoringType.Pair);
+            return ofAKindList.First().BuildCardResult(ScoringType.Pair, force=force);
         }
 
         return new ScoredMatch
         {
             Type = ScoringType.HighCard,
-            Cards = hand.Cards.Take(1).Select(x => x.ForcedConcrete()).ToList(),
+            Cards = force ? hand.Cards.Take(1).Select(x => x.ForcedConcrete()).ToList() : hand.Cards.Take(1).ToList(),
         };
     }
 }
