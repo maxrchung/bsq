@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://4lycixra0wpo"]
+
+[ext_resource type="PackedScene" uid="uid://deckn0bcnq22x" path="res://objects/PlayingCard.tscn" id="1_ffheu"]
+
+[node name="BidView" type="Control" unique_id=1375384170]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1588748334]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1476967492]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayingCard" parent="VBoxContainer/HBoxContainer" unique_id=1546708771 instance=ExtResource("1_ffheu")]
+layout_mode = 2

@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cghpwjo0rnnyq"]
+
+[node name="MeetingScreen" type="Control" unique_id=1158891409]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1610124733]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 67.0
+grow_horizontal = 2
+
+[node name="MeetingLabel" type="Label" parent="PanelContainer" unique_id=1637834433]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "EMERGENCY MEETING"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=839253012]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=416620540]
+layout_mode = 2
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer2" unique_id=1549834912]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Real" type="Button" parent="VBoxContainer/HBoxContainer2/CenterContainer" unique_id=1235385985]
+layout_mode = 2
+text = "TRVTH NVKE"
+
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/HBoxContainer2" unique_id=1318082719]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Fake" type="Button" parent="VBoxContainer/HBoxContainer2/CenterContainer2" unique_id=796605521]
+layout_mode = 2
+text = "FLVSE NVKE"
+
+[node name="Control" type="Control" parent="VBoxContainer" unique_id=1070531577]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
