@@ -38,3 +38,7 @@ func set_cards(cards):
 			bid.set_card(card.suit, card.value)
 			
 		add_child(bid)
+
+func enable(should_enable):
+	for child in get_children():
+		child.enable(should_enable)

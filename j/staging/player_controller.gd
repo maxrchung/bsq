@@ -170,12 +170,13 @@ func _handle_rsp(text: String) -> void:
 				playerName = playerHand.name
 				break
 		
-		
 		if currentPlayer == myPlayerId:
 			$"../BidButton".visible = true
+			$"../BidMpregs".enable(true)
 			$"../CurrentText".text = "Current turn: " + playerName + " (You)"
 		else:
 			$"../BidButton".visible = false
+			$"../BidMpregs".enable(false)
 			$"../CurrentText".text = "Current turn: " + playerName
 	
 	if "bidPlayer" in d:

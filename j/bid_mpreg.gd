@@ -47,7 +47,15 @@ func set_card(suit, value):
 			$NumberDropdown.selected = i
 			break
 	
-
+func enable(should_enable):
+	if should_enable:
+		$SuitDropdown.disabled = false
+		$NumberDropdown.disabled = false
+		$ClearButton.visible = true
+	else:
+		$SuitDropdown.disabled = true
+		$NumberDropdown.disabled = true
+		$ClearButton.visible = false
 
 func _on_clear_button_pressed() -> void:
 	$SuitDropdown.selected = -1
