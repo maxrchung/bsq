@@ -11,7 +11,7 @@ offset_bottom = 23.0
 text = "Name: "
 
 [node name="CardCount" type="Label" parent="." unique_id=937883527]
-offset_top = 23.0
-offset_right = 47.0
-offset_bottom = 46.0
+offset_top = 19.0
+offset_right = 74.0
+offset_bottom = 42.0
 text = "Cards: "

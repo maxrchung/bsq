@@ -36,7 +36,7 @@ public class PlayerChannel : IRpcListener
     public ValueTask<IReadOnlyList<LobbyListEntry>> GetLobbyListAsync()
     {
         return ValueTask.FromResult<IReadOnlyList<LobbyListEntry>>(_coordinator.GetLobbies()
-            .Select(x => new LobbyListEntry(x.Id, x.Name)).ToList());
+            .Select(x => new LobbyListEntry(x.Id, x.Name)).Reverse().ToList());
     }
 
     public ValueTask<IReadOnlyList<PlayerHandInfo>> GetPlayerHandsAsync(Guid lobbyId, Guid playerId)

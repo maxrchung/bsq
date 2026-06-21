@@ -13,7 +13,6 @@ enum ClientState {
 	Connecting,
 	Idle,
 	Failed,
-	FetchingLobbies,
 }
 
 var clientState: ClientState = ClientState.Connecting
@@ -33,9 +32,15 @@ func _ready() -> void:
 	$"../EmergencyMeeting".vote_bs.connect(_on_vote_against_button_pressed)
 
 func _on_connect_button_pressed() -> void:
+	socket.close()
+	socket = WebSocketPeer.new()
+	
 	var host = $"../LobbyStuff/ConnectText".text
 	socket.connect_to_url("ws://" + host + ":5092/api/v1/game/socket")
-	is_connected = true
+	clientState = ClientState.Connecting
+	
+	lobbyList.clear()
+	
 
 func _invoke(name: String, value):
 	var body = {"id": 0}
@@ -44,11 +49,22 @@ func _invoke(name: String, value):
 
 func _do_join() -> void:
 	var name = nameField.text
+	
+	if name.length() == 0:
+		return
+		
+	if lobbyList.get_selected_items().size() == 0:
+		return
+		
+	if clientState != ClientState.Idle:
+		return
+	
 	var lobbyId = itemMap[lobbyList.get_selected_items()[0]]
 	print("joining ", lobbyId, " as ", name)
 	_invoke("join", {"lobbyId": lobbyId, "playerName": name})
 	$"../LobbyStuff".visible = false
 	
+	$"../LobbyNameLabel".visible = true
 	$"../PlayersLabel".visible = true
 	$"../PlayerInfos".visible = true
 	$"../StartButton".visible = true
@@ -90,6 +106,8 @@ func _handle_rsp(text: String) -> void:
 		myLobbyId = d.lobbyChange.id
 		var players = d.lobbyChange.players
 		
+		$"../LobbyNameLabel".text = "Lobby: " + d.lobbyChange.name
+		
 		playerHands = []
 		for player in players:
 			playerHands.append({
@@ -117,12 +135,19 @@ func _handle_rsp(text: String) -> void:
 	if "currentPlayer" in d:
 		currentPlayer = d.currentPlayer
 		
-		$"../CurrentText".text = "Current player: " + currentPlayer
+		var playerName = currentPlayer
+		for playerHand in playerHands:
+			if currentPlayer == playerHand.id:
+				playerName = playerHand.name
+				break
+		
 		
 		if currentPlayer == myPlayerId:
 			$"../BidButton".visible = true
+			$"../CurrentText".text = "Current turn: " + playerName + " (You)"
 		else:
 			$"../BidButton".visible = false
+			$"../CurrentText".text = "Current turn: " + playerName
 	
 	if "bidPlayer" in d:
 		bidPlayer = d.bidPlayer
@@ -137,18 +162,21 @@ func _handle_rsp(text: String) -> void:
 		$"../BidButton".visible = false
 
 func _process_socket() -> void:
-	if clientState == ClientState.Failed: return
+	
 	socket.poll()
+	
 	var state = socket.get_ready_state()
-	if state == WebSocketPeer.STATE_CLOSED:
+	if state == WebSocketPeer.STATE_CLOSED and clientState != ClientState.Connecting:
 		print("websocket closed :(")
 		clientState = ClientState.Failed
-	if state != WebSocketPeer.STATE_OPEN: return
-	if clientState == ClientState.Connecting:
+	elif state == WebSocketPeer.STATE_OPEN and clientState == ClientState.Connecting:
 		print("websocket connected")
 		clientState = ClientState.Idle
 		_invoke("connect", {"version": "hi"})
 		_invoke("getInfo", "lobbies")
+		
+	if clientState == ClientState.Failed: return
+		
 	while socket.get_available_packet_count() > 0:
 		var packet = socket.get_packet()
 		var text = packet.get_string_from_utf8()
@@ -157,9 +185,7 @@ func _process_socket() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if is_connected:
-		_process_socket()
-	pass
+	_process_socket()
 
 
 func _on_send_json_button_pressed() -> void:
@@ -184,3 +210,16 @@ func _on_vote_against_button_pressed() -> void:
 func _on_bid_button_pressed() -> void:
 	var cards = $"../BidMpregs".get_cards()
 	_invoke("bid", { "cards": cards } )
+
+
+func _on_create_button_pressed() -> void:
+	var name = nameField.text
+	
+	if name.length() == 0:
+		return
+		
+	if lobbyList.get_selected_items().size() == 0:
+		return
+		
+	if clientState != ClientState.Idle:
+		return

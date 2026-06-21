@@ -25,5 +25,5 @@ func update_players(player_hands, my_player_id):
 		else:
 			player_info.player_name = player_hand.name
 		player_info.card_count = player_hand.cardCount
-		player_info.position = Vector2(0, i * 60)
+		player_info.position = Vector2(0, i * 50)
 		add_child(player_info)
