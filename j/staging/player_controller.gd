@@ -26,6 +26,9 @@ var playerHands
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if OS.is_debug_build():
+		$"../LobbyStuff/ConnectText".text = "localhost"
+	
 	joinButton.pressed.connect(_do_join)
 	$"../EmergencyMeeting".emergency.connect(_on_emergency_meeting_button_pressed)
 	$"../EmergencyMeeting".vote_no_bs.connect(_on_vote_for_button_pressed)

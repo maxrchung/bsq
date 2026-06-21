@@ -77,7 +77,7 @@ offset_top = 308.0
 offset_right = 591.0
 offset_bottom = 345.0
 text = "localhost"
-placeholder_text = "localhost"
+placeholder_text = "Host"
 
 [node name="LobbyNameLabel" type="Label" parent="." unique_id=1489260637]
 visible = false
