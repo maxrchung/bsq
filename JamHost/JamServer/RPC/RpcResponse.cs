@@ -90,6 +90,8 @@ public record RpcResponse
 
     public Guid? CurrentPlayer { get; set; }
 
+    public Guid? BidPlayer { get; set; }
+
     public DeckInfo? Deck { get; set; }
 
     public IReadOnlyList<PlayerHandInfo>? PlayerHands { get; set; }

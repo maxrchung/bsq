@@ -153,7 +153,7 @@ public class GameLobby
         _player_index += 1;
         _player_index = _player_index % _active_players.Count;
         var current_player = _active_players[_player_index];
-        await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
+        await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id, BidPlayer = _board.GetBidPlayer().Id });
     }
 
     public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid) {
