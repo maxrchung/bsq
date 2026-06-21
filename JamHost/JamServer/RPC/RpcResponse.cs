@@ -78,6 +78,8 @@ public record GameStateUpdateEvent
     public RoundInfo? CurrentRound { get; init; }
     public Guid? Winner {get; init; }
 
+    public IReadOnlyList<LobbyPlayer>? Players { get; set; }
+
 }
 
 public record RpcResponse

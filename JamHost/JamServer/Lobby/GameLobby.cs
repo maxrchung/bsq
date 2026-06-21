@@ -25,7 +25,8 @@ public record EmergencyMeetingState
         VotesAgainst.Clear();
     }
 
-    public void Reset() {
+    public void Reset()
+    {
         IsActive = false;
         VotesFor.Clear();
         VotesAgainst.Clear();
@@ -122,31 +123,36 @@ public class GameLobby
     // dupe some logic for BACK COMPAT 
     private async Task UpdateGameState(GameStateUpdateEvent.Type eventType)
     {
-        if (eventType == GameStateUpdateEvent.Type.RoundStart) {
-            var response = new RpcResponse
+        var response = new RpcResponse
+        {
+            Id = 0,
+            GameStateUpdateEvent = CreateGameStateUpdateEvent(eventType)
+        };
+        await Task.WhenAll(_players.Select(player => player.Channel.Send(response)).ToList());
+
+    }
+
+    private GameStateUpdateEvent CreateGameStateUpdateEvent(GameStateUpdateEvent.Type eventType)
+    {
+        return eventType switch
+        {
+            GameStateUpdateEvent.Type.RoundStart =>
+            new GameStateUpdateEvent
             {
-                Id = 0,
-                GameStateUpdateEvent = new GameStateUpdateEvent
-                {
-                    EventType = GameStateUpdateEvent.Type.RoundStart,
-                    CurrentRound = CreateCurrentRoundInfo()
-                }
-            };
-            await Task.WhenAll(_players.Select(player => player.Channel.Send(response)).ToList());
-        } else {
-            var winner = CalculateWinner(_players);
-            var response = new RpcResponse
-            {
-                Id = 0,
-                GameStateUpdateEvent = new GameStateUpdateEvent
-                {
-                    EventType = GameStateUpdateEvent.Type.GameOver,
-                    Winner = winner,
-                    CurrentRound = CreateCurrentRoundInfo()
-                }
-            };
-            await Task.WhenAll(_players.Select(player => player.Channel.Send(response)).ToList());
-        }
+                EventType = GameStateUpdateEvent.Type.RoundStart,
+                CurrentRound = CreateCurrentRoundInfo(),
+                Players = _players.Select(LobbyPlayer.From).ToList()
+            },
+            GameStateUpdateEvent.Type.GameOver =>
+               new GameStateUpdateEvent
+               {
+                   EventType = GameStateUpdateEvent.Type.GameOver,
+                   Winner = CalculateWinner(_players),
+                   CurrentRound = CreateCurrentRoundInfo(),
+                   Players = _players.Select(LobbyPlayer.From).ToList()
+               },
+            _ => throw new ArgumentException("Invalid GameStateUpdateEvent.Type")
+        };
     }
 
     public RoundInfo CreateCurrentRoundInfo()
@@ -161,9 +167,12 @@ public class GameLobby
     public async Task NextRound()
     {
         _board.NextRound();
-        if (_board.RoundNumber > MAX_ROUNDS) {
+        if (_board.RoundNumber > MAX_ROUNDS)
+        {
             await UpdateGameState(GameStateUpdateEvent.Type.GameOver);
-        } else {
+        }
+        else
+        {
             await UpdateHands(); // TODO remove dupe call
             await UpdateGameState(GameStateUpdateEvent.Type.RoundStart);
         }
@@ -201,12 +210,15 @@ public class GameLobby
         var current_player = _players[_player_index];
         if (_board.GetBidPlayer() is null) {
             await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id });
-        } else {
+        }
+        else
+        {
             await InvokeAll(new RpcResponse { Id = 0, CurrentPlayer = current_player.Id, BidPlayer = _board.GetBidPlayer().Id });
         }
     }
 
-    public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid) {
+    public async Task<bool> ValidateBid(List<Dictionary<string, string>> raw_bid)
+    {
         var bid = new List<Card>();
         foreach (Dictionary<string, string> raw_card in raw_bid)
         {
@@ -247,14 +259,16 @@ public class GameLobby
         _emergencyMeeting.Reset();
     }
 
-    public void UpdatePlayers(bool result) {
+    public void UpdatePlayers(bool result)
+    {
         // false == not bs, the bid is valid
         // true == bs, bid is not valid
         if (result) {
             Penalize(new List<GamePlayer>() { _board.GetBidPlayer() }); // penalize the person that bid
             Reward(_emergencyMeeting.VotesAgainst);
         }
-        else {
+        else
+        {
             Penalize(_emergencyMeeting.VotesAgainst);
             Reward(_emergencyMeeting.VotesFor);
         }
@@ -283,12 +297,15 @@ public class GameLobby
         }
     }
 
-    public Guid CalculateWinner(List<GameLobbyPlayer> players) {
+    public Guid CalculateWinner(List<GameLobbyPlayer> players)
+    {
         var maxScore = double.NegativeInfinity;
         var winningGuid = new Guid();
-        foreach (var player in players) {
+        foreach (var player in players)
+        {
             var score = player.GamePlayer.GetScore();
-            if (score > maxScore) {
+            if (score > maxScore)
+            {
                 winningGuid = player.Id;
                 maxScore = score;
             }

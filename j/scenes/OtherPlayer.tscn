@@ -13,6 +13,7 @@ point_count = 3
 script = ExtResource("1_0tb8b")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1244800945]
+z_index = -1
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_tvnyp")
 

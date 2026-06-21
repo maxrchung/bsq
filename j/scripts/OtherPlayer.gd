@@ -18,7 +18,7 @@ var max_card_rotation_rad: float = deg_to_rad(max_card_rotation_deg)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# init player id text?
-	label.text = "player_id: %d" % player_id
+	#label.text = "player_id: %d" % player_id
 	spawn_along_curve(hand_size)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -165,7 +165,14 @@ func _handle_rsp(text: String) -> void:
 				$"../Hand".update_cards(playerHand.cards)
 				
 	if "gameStateUpdateEvent" in d:
-		$"../RoundNumberLabel".text = "Rounds left: " + str(int(7 - d.gameStateUpdateEvent.currentRound.roundNumber))
+		var roundNumber: int = int(d.gameStateUpdateEvent.currentRound.roundNumber)
+		var activePlayerCount: int = d.gameStateUpdateEvent.activePlayers.size()
+		$"../RoundNumberLabel".text = "Rounds left: " + str(7 -roundNumber)
+		print("activePlayerCount %d" % activePlayerCount)
+		if roundNumber == 1:
+			# Game just started, init other players
+			$"../Table".init_table(activePlayerCount)
+	
 				
 	if "currentPlayer" in d:
 		currentPlayer = d.currentPlayer

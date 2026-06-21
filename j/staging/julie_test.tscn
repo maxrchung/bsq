@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="1_766oo"]
 [ext_resource type="Script" uid="uid://cod47o4arki83" path="res://staging/player_controller.gd" id="1_ru61t"]
 [ext_resource type="AudioStream" uid="uid://dq7iqjj05ieqw" path="res://assets/sounds/Click_stereo.ogg.mp3" id="3_5c5ks"]
+[ext_resource type="Script" uid="uid://cpbc15rl8v8hb" path="res://scripts/table_controller.gd" id="2_5c5ks"]
 [ext_resource type="Script" uid="uid://bbeffmus5r6m1" path="res://staging/player_infos.gd" id="3_8y7d7"]
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
@@ -11,6 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://c5al5ipri7xm4" path="res://instructions.tscn" id="8_mnxgi"]
 [ext_resource type="AudioStream" uid="uid://b22pi56hn2yvy" path="res://assets/sounds/alarm.ogg" id="10_cyny5"]
 [ext_resource type="AudioStream" uid="uid://bd18sw42ip05j" path="res://assets/sounds/bgm.ogg" id="11_cyny5"]
+
+[sub_resource type="Curve2D" id="Curve2D_mnxgi"]
+bake_interval = 1.0
+_data = {
+"points": PackedVector2Array(-6.363636, 3.3636365, 6.363636, -3.3636365, 9.599999, 95.899994, -15.523, 0.12100001, 15.523, -0.12100001, 56.799995, 90.799995, -8.396909, -3.7599094, 8.396909, 3.7599094, 107.09999, 96.899994)
+}
+point_count = 3
 
 [node name="Node2D" type="Node2D" unique_id=866605961]
 
@@ -21,15 +29,25 @@ offset_right = 591.0
 offset_bottom = 33.0
 text = "bs"
 
-[node name="Table" type="Sprite2D" parent="." unique_id=1219413131]
-position = Vector2(575, 322)
-texture = ExtResource("1_766oo")
-
 [node name="PlayerController" type="Node" parent="." unique_id=1044269277 node_paths=PackedStringArray("nameField", "joinButton", "lobbyList")]
 script = ExtResource("1_ru61t")
 nameField = NodePath("../LobbyStuff/LineEdit")
 joinButton = NodePath("../LobbyStuff/Button")
 lobbyList = NodePath("../LobbyStuff/ItemList")
+
+[node name="Table" type="Node2D" parent="." unique_id=574531059 node_paths=PackedStringArray("spawn_path")]
+script = ExtResource("2_5c5ks")
+spawn_path = NodePath("SpawnPath")
+
+[node name="SpawnPath" type="Path2D" parent="Table" unique_id=1862568266]
+position = Vector2(-0.00012207031, -767.0001)
+scale = Vector2(10, 10)
+curve = SubResource("Curve2D_mnxgi")
+
+[node name="TextureRect" type="TextureRect" parent="Table" unique_id=799648559]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_766oo")
 
 [node name="LobbyStuff" type="Node2D" parent="." unique_id=2135225762]
 
