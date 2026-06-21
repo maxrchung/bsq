@@ -249,6 +249,7 @@ func _on_bid_button_pressed() -> void:
 	var cards = $"../BidMpregs".get_cards()
 	
 	if cards.size() == 0:
+		print("no cards, so not submitting")
 		return
 	
 	_invoke("bid", { "cards": cards } )

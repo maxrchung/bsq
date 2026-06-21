@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
 [ext_resource type="PackedScene" uid="uid://c5yj2r1lrorg" path="res://bid_mpregs.tscn" id="6_nh24k"]
 [ext_resource type="PackedScene" uid="uid://erf1mvugrkjm" path="res://emergency_meeting.tscn" id="7_766oo"]
+[ext_resource type="PackedScene" uid="uid://c5al5ipri7xm4" path="res://instructions.tscn" id="8_mnxgi"]
 
 [node name="Node2D" type="Node2D" unique_id=866605961]
 
@@ -169,6 +170,8 @@ grow_vertical = 2
 text = "Winner"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Instructions" parent="." unique_id=1370419733 instance=ExtResource("8_mnxgi")]
 
 [connection signal="pressed" from="LobbyStuff/CreateButton" to="PlayerController" method="_on_create_button_pressed"]
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]

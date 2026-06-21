@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://c5al5ipri7xm4"]
+
+[ext_resource type="Script" uid="uid://n6xra6l7lpr4" path="res://instructions.gd" id="1_7ls63"]
+
+[node name="Instructions" type="Node2D" unique_id=1370419733]
+script = ExtResource("1_7ls63")
+
+[node name="TriggerButton" type="Button" parent="." unique_id=1885870410]
+offset_left = 600.0
+offset_top = 9.0
+offset_right = 620.0
+offset_bottom = 38.0
+text = "?"
+
+[node name="Background" type="ColorRect" parent="." unique_id=1714780615]
+visible = false
+offset_left = 304.0
+offset_top = 46.0
+offset_right = 863.0
+offset_bottom = 438.0
+color = Color(0, 0, 0, 0.8784314)
+
+[node name="BodyText" type="Label" parent="." unique_id=2048980610]
+visible = false
+offset_left = 322.0
+offset_top = 63.0
+offset_right = 848.0
+offset_bottom = 420.0
+text = "BS Poker is a bluffing game where you deal cards
+and try to guess the highest scoring combination.
+You call BS when you think a hand doesn't exist.
+
+Priority
+- Royal flush
+- Striaght flush
+- Four of a kind
+- Full house
+- Flush
+- Straight
+- Three of a kind
+- Two pair
+- Pair
+- High card"
+
+[connection signal="pressed" from="TriggerButton" to="." method="_on_trigger_button_pressed"]
