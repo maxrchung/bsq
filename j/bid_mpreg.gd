@@ -46,12 +46,26 @@ func set_card(suit, value):
 		if $NumberDropdown.get_item_text(i) == str(value):
 			$NumberDropdown.selected = i
 			break
-	
+
+func decide_to_show_clear():
+	var suit = ""
+	if $SuitDropdown.selected > 0:
+		suit = $SuitDropdown.get_item_text($SuitDropdown.selected)
+		
+	var value = ""
+	if $NumberDropdown.selected > 0:
+		value = $NumberDropdown.get_item_text($NumberDropdown.selected)
+		
+	if not suit and not value:
+		$ClearButton.visible = false
+	else:
+		$ClearButton.visible = true
+
 func enable(should_enable):
 	if should_enable:
 		$SuitDropdown.disabled = false
 		$NumberDropdown.disabled = false
-		$ClearButton.visible = true
+		decide_to_show_clear()
 	else:
 		$SuitDropdown.disabled = true
 		$NumberDropdown.disabled = true
@@ -60,4 +74,20 @@ func enable(should_enable):
 func _on_clear_button_pressed() -> void:
 	$SuitDropdown.selected = -1
 	$NumberDropdown.selected = -1
+	$ClearButton.visible = false
+	
+func _on_dropdown_item_selected(index: int) -> void:
+	var suit = ""
+	if $SuitDropdown.selected > 0:
+		suit = $SuitDropdown.get_item_text($SuitDropdown.selected)
+		
+	var value = ""
+	if $NumberDropdown.selected > 0:
+		value = $NumberDropdown.get_item_text($NumberDropdown.selected)
+		
+	if not suit and not value:
+		$ClearButton.visible = false
+	else:
+		$ClearButton.visible = true
+		
 	
