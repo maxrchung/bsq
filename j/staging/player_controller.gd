@@ -8,6 +8,7 @@ var socket = WebSocketPeer.new()
 var json = JSON.new()
 var itemMap: Dictionary[int, String] = {}
 var is_connected = false
+var is_game_donezo = false
 
 enum ClientState {
 	Connecting,
@@ -78,6 +79,9 @@ func _do_join() -> void:
 	$"../QuitButton".visible = true
 
 func _handle_rsp(text: String) -> void:
+	if is_game_donezo:
+		return
+	
 	var err = json.parse(text)
 	if err != OK:
 		print("Failed to parse JSON: %s" % json.error_string)
@@ -100,7 +104,24 @@ func _handle_rsp(text: String) -> void:
 			$"../RoundNumberLabel".visible = true
 			
 		elif event.eventType == "GameOver":
-			print("GAME OVER")
+			$"../EmergencyMeeting".visible = false
+			$"../Hand".visible = false
+			$"../BidMpregs".visible = false
+			$"../BidButton".visible = false
+			$"../EmergencyMeeting".visible = false
+			$"../CurrentText".visible = false
+			$"../RoundNumberLabel".visible = false
+			
+			$"../WinnerLabel".visible = true
+			var winnerId = event.winner
+			var winnerName = winnerId
+			for playerHand in playerHands:
+				if currentPlayer == playerHand.id:
+					winnerName = playerHand.name
+					break
+			$"../WinnerLabel".text = "Winner: " + winnerName
+			is_game_donezo = true
+			return
 	
 	if "lobbyList" in d:
 		lobbyList.clear()
@@ -218,6 +239,10 @@ func _on_vote_against_button_pressed() -> void:
 
 func _on_bid_button_pressed() -> void:
 	var cards = $"../BidMpregs".get_cards()
+	
+	if cards.size() == 0:
+		return
+	
 	_invoke("bid", { "cards": cards } )
 
 

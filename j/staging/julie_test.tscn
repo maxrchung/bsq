@@ -153,6 +153,22 @@ offset_right = 75.0
 offset_bottom = 633.0
 text = "< Quit"
 
+[node name="WinnerLabel" type="Label" parent="." unique_id=1519403405]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 544.0
+offset_top = 326.0
+offset_right = 614.0
+offset_bottom = 347.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Winner"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="LobbyStuff/CreateButton" to="PlayerController" method="_on_create_button_pressed"]
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]
 [connection signal="pressed" from="StartButton" to="PlayerController" method="_on_start_button_pressed"]

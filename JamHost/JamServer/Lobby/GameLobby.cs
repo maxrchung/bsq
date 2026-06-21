@@ -56,7 +56,7 @@ public class GameLobby
 
     private readonly EmergencyMeetingState _emergencyMeeting = new();
 
-    public const int HAND_LIMIT = 6;
+    public const int HAND_LIMIT = 67; // Setting this real high to avoid some weird die cases
     public const int SCORE_LIMIT = 50;
     public const int MAX_ROUNDS = 6;
 
