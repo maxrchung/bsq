@@ -83,9 +83,6 @@ func _do_join() -> void:
 	$"../QuitButton".visible = true
 
 func _handle_rsp(text: String) -> void:
-	if is_game_donezo:
-		return
-	
 	var err = json.parse(text)
 	if err != OK:
 		print("Failed to parse JSON: %s" % json.error_string)
@@ -153,9 +150,6 @@ func _handle_rsp(text: String) -> void:
 			})	
 		$"../PlayerInfos".update_players(playerHands, myPlayerId)
 		
-	if "localIdChange" in d:
-		myPlayerId = d.localIdChange
-		
 	if "playerHands" in d:
 		playerHands = d.playerHands
 		$"../PlayerInfos".update_players(playerHands, myPlayerId)
@@ -163,16 +157,16 @@ func _handle_rsp(text: String) -> void:
 		for playerHand in playerHands:
 			if myPlayerId == playerHand.id:
 				$"../Hand".update_cards(playerHand.cards)
+		
+	if is_game_donezo:
+		return
+		
+	if "localIdChange" in d:
+		myPlayerId = d.localIdChange
 				
 	if "gameStateUpdateEvent" in d:
 		var roundNumber: int = int(d.gameStateUpdateEvent.currentRound.roundNumber)
-		var activePlayerCount: int = d.gameStateUpdateEvent.activePlayers.size()
 		$"../RoundNumberLabel".text = "Rounds left: " + str(7 -roundNumber)
-		print("activePlayerCount %d" % activePlayerCount)
-		if roundNumber == 1:
-			# Game just started, init other players
-			$"../Table".init_table(activePlayerCount)
-	
 				
 	if "currentPlayer" in d:
 		currentPlayer = d.currentPlayer

@@ -30,17 +30,17 @@ func update_cards(cards):
 	if count == 0:
 		return
 		
-	# Dedicate at least 250 for the main center card
-	var width = 250
+	# Dedicate at least 125 for the main center card
+	var width = 125
 	
-	# Add 50 for other cards
+	# Add 40 for other cards
 	if (count > 1):
-		width += (count - 1) * 50
+		width += (count - 1) * 40
 		
 	var screen_size = get_viewport().get_visible_rect().size
 	
 	# Half screen size - half total width + account for anchor
-	var left = screen_size.x / 2 - width / 2 + 125
+	var left = screen_size.x / 2 - width / 2 + 125 / 2
 	
 	for i in count:
 		var card = card_scene.instantiate()
@@ -78,8 +78,8 @@ func update_cards(cards):
 		
 		card.value = number
 		card.position = Vector2(
-			(left + i * 50) - (250 / 2),
-			screen_size.y - 75
+			(left + i * 40) - (125 / 2),
+			screen_size.y - 100
 		)
 		if is_shown:
 			card.face_up = true
