@@ -70,6 +70,9 @@ func _update_hand():
 		card_instance.face_up = card[2]
 		_apply_card_layout(card_instance)
 		add_child(card_instance)
+		card_instance.suit = card[0]
+		card_instance.value = card[1]
+		card_instance.face_up = card[2]
 	queue_sort()
 	update_minimum_size()
 
