@@ -143,8 +143,7 @@ public class GameLobby
                 {
                     EventType = GameStateUpdateEvent.Type.RoundStart,
                     CurrentRound = CreateCurrentRoundInfo(),
-                    Players = _players.Select(LobbyPlayer.From).ToList(),
-                    Bid = new List<Card>(),
+                    Players = _players.Select(LobbyPlayer.From).ToList()
                 },
             GameStateUpdateEvent.Type.GameOver =>
                 new GameStateUpdateEvent
@@ -178,6 +177,7 @@ public class GameLobby
         {
             await UpdateHands(); // TODO remove dupe call
             await UpdateGameState(GameStateUpdateEvent.Type.RoundStart);
+            await InvokeAll(new RpcResponse { Bid = new List<Card>() });
         }
     }
 
