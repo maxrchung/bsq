@@ -15,7 +15,6 @@ public enum InvokeCtlType
     StartGame,
     EmergencyMeetingVoteFor,
     EmergencyMeetingVoteAgainst,
-    EmergencyMeetingOver,
 }
 
 public record CreateRequest

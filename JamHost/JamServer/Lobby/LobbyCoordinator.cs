@@ -29,5 +29,7 @@ public class LobbyCoordinator
         return lobby;
     }
 
-    public IEnumerable<LobbyListEntry> GetLobbies() => _lobbies.Select(x => new LobbyListEntry(x.Key, x.Value.Name));
+    public IEnumerable<LobbyListEntry> GetLobbies() => _lobbies
+        .Where(x => !x.Value.IsActive)
+        .Select(x => new LobbyListEntry(x.Key, x.Value.Name));
 }

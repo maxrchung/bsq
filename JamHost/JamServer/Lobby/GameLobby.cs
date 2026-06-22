@@ -69,6 +69,8 @@ public class GameLobby
         Id = id;
     }
 
+    public bool IsActive => _board.RoundNumber > 0;
+
     private async Task InvokeAll(RpcResponse msg)
     {
         await Task.WhenAll(_players.Select(x => x.Channel.Send(msg)));
