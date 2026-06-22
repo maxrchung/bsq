@@ -69,7 +69,6 @@ func _update_bid(bid: SrvCxn.RpcHand) -> void:
 			update_card(card, bid.cards[i])
 		else:
 			blank_card(card)
-			card.visible = false
 
 func _update_editable():
 	if !_was_ready:
