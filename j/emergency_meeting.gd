@@ -1,4 +1,6 @@
 extends Node2D
+@onready var click_fx: AudioStreamPlayer = $click_fx
+@onready var emergency_btn_fx: AudioStreamPlayer = $emergency_btn_fx
 
 signal emergency
 signal vote_bs
@@ -61,10 +63,13 @@ func update_state(player_id, bidder_id, emergency_meeting):
 		$BsButton.visible = false
 
 func on_emergency_press():
+	emergency_btn_fx.play()
 	emergency.emit()
 
 func on_not_bs_press():
+	click_fx.play()
 	vote_no_bs.emit()
 	
 func on_bs_press():
+	click_fx.play()
 	vote_bs.emit()

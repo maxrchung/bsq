@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://erf1mvugrkjm"]
 
 [ext_resource type="Script" uid="uid://cxworxortpvri" path="res://emergency_meeting.gd" id="1_ybcmp"]
+[ext_resource type="PackedScene" uid="uid://c0t4ksfesbeoi" path="res://scenes/gui/click_fx.tscn" id="2_3j5tj"]
 
 [node name="EmergencyMeeting" type="Node2D" unique_id=1828152688]
 script = ExtResource("1_ybcmp")
@@ -42,6 +43,10 @@ offset_right = 94.0
 offset_bottom = 31.0
 text = "BS"
 metadata/_edit_use_anchors_ = true
+
+[node name="click_fx" parent="." unique_id=733259453 instance=ExtResource("2_3j5tj")]
+
+[node name="emergency_btn_fx" type="AudioStreamPlayer" parent="." unique_id=1883493882]
 
 [connection signal="pressed" from="EmergencyButton" to="." method="on_emergency_press"]
 [connection signal="pressed" from="NoBsButton" to="." method="on_not_bs_press"]
