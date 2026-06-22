@@ -10,10 +10,10 @@ uniform float AMPLITUDE = 3.f;
 
 const float VERTEX_OFFSET = 0.2f;
 
-const vec2 BACKING_OFFSET = vec2(0.f, 4.f);
-const vec2 BACKFACE_OFFSET = vec2(1.f, 4.f);
-const vec2 WHITE_BORDER_OFFSET = vec2(2.f, 4.f);
-const vec2 BLACK_BORDER_OFFSET = vec2(3.f, 4.f);
+const vec2 BACKING_OFFSET = vec2(0.f, 5.f);
+const vec2 BACKFACE_OFFSET = vec2(1.f, 5.f);
+const vec2 WHITE_BORDER_OFFSET = vec2(2.f, 5.f);
+const vec2 BLACK_BORDER_OFFSET = vec2(3.f, 5.f);
 
 void vertex() {
 	float effectiveTime = TIME + (float(VERTEX_ID) * VERTEX_OFFSET);

@@ -15,25 +15,15 @@ script = ExtResource("1_kkqf8")
 
 [node name="Card1" parent="." unique_id=1589550627 instance=ExtResource("1_rosoq")]
 layout_mode = 2
-suit = 4
-value = 1
 
 [node name="Card2" parent="." unique_id=1192382488 instance=ExtResource("1_rosoq")]
 layout_mode = 2
-suit = 4
-value = 1
 
 [node name="Card3" parent="." unique_id=560938406 instance=ExtResource("1_rosoq")]
 layout_mode = 2
-suit = 4
-value = 1
 
 [node name="Card4" parent="." unique_id=1743235103 instance=ExtResource("1_rosoq")]
 layout_mode = 2
-suit = 4
-value = 1
 
 [node name="Card5" parent="." unique_id=61436889 instance=ExtResource("1_rosoq")]
 layout_mode = 2
-suit = 4
-value = 1

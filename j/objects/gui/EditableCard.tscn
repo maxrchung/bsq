@@ -9,6 +9,8 @@ offset_right = 125.0
 offset_bottom = 175.0
 flat = true
 script = ExtResource("1_rp1q1")
+suit = 5
+value = 1
 
 [node name="PlayingCard" parent="." unique_id=1546708771 instance=ExtResource("1_q742r")]
 layout_mode = 1
@@ -19,6 +21,8 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+suit = 5
+value = 1
 
 [node name="CardMenu" type="PanelContainer" parent="PlayingCard" unique_id=1211723102]
 visible = false

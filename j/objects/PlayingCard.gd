@@ -21,8 +21,8 @@ enum SuitName {
 	Heart = 1,
 	Club = 2,
 	Diamond = 3,
-	Special = 4, # for special snowflakes :)
 	None = 4, # :)
+	Special = 5, # for special snowflakes :)
 }
 
 const SPECIAL_CARDS = {

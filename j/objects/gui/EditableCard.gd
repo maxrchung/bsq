@@ -41,6 +41,7 @@ func get_inner_suit() -> PlayingCard.SuitName:
 func get_suit_idx():
 	match suit:
 		PlayingCard.SuitName.Special: return 0
+		PlayingCard.SuitName.None: return 0
 		PlayingCard.SuitName.Spade: return 1
 		PlayingCard.SuitName.Heart: return 2
 		PlayingCard.SuitName.Club: return 3
@@ -71,11 +72,10 @@ func _update_material():
 		CardView.value = PlayingCard.SPECIAL_CARDS[_SUIT_MAP[suit]]
 	else:
 		if suit == PlayingCard.SuitName.Special:
-			CardView.suit = PlayingCard.SuitName.Special
-			CardView.value = PlayingCard.SPECIAL_CARDS.QuestionSuit
+			CardView.suit = PlayingCard.SuitName.None
 		else:
 			CardView.suit = suit
-			CardView.value = value
+		CardView.value = value
 
 func _handle_suit_changed(idx):
 	match idx:
