@@ -88,6 +88,7 @@ signal hands_updated(hands: PlayerHands)
 signal player_id_updated(player_id: String)
 signal emergency_meeting_updated(info: EmergencyMeetingInfo)
 signal bid_changed(bid: RpcHand)
+signal game_started(players: Array[PlayerInfo])
 
 # publics
 var CurrentPlayerID: String = ""
@@ -145,6 +146,11 @@ func _parse_game_state_change(data: Dictionary) -> void:
 	var event = data.eventType
 	if event == "RoundStart":
 		StateManager.change_state(StateMgr.GameStateT.Round)
+		var roundNumber: int = data.currentRound.roundNumber
+		if roundNumber == 1:
+			# Game just started, init other players
+			game_started.emit(data.players)
+			#TableController.init_table(myPlayerId, d.gameStateUpdateEvent.players)
 	elif event == "GameOver":
 		StateManager.change_state(StateMgr.GameStateT.GameOver)
 	

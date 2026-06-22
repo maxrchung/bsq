@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cq35etfnqi5vs"]
 
-[ext_resource type="Script" uid="uid://cpbc15rl8v8hb" path="res://scripts/table_controller.gd" id="1_so1t7"]
+[ext_resource type="Script" uid="uid://cpbc15rl8v8hb" path="res://scripts/TableController.gd" id="1_so1t7"]
 [ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="2_1euqw"]
 
 [sub_resource type="Curve2D" id="Curve2D_irtva"]
@@ -19,7 +19,6 @@ scale = Vector2(10, 10)
 curve = SubResource("Curve2D_irtva")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1626650095]
-visible = false
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0

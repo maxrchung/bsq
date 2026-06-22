@@ -1,13 +1,16 @@
 class_name OtherPlayer extends Node
 
-var player_id: int
-var hand: Array[PlayingCard]
+var player_id: String
+var player_count: int
+var player_name: String
 var hand_size: int
 
+var useLegacyCardFan: bool = false
 const PLAYING_CARD_SCENE = preload("res://objects/PlayingCard.tscn")
 
 @onready var label: RichTextLabel = $Sprite2D/RichTextLabel
 @onready var spawnPath: Path2D = $SpawnPath
+@onready var bidView: BidView = $BidView
 
 ## CARD FAN CONSTANTS
 # card separation distance and scale
@@ -20,15 +23,18 @@ var max_card_rotation_rad: float = deg_to_rad(max_card_rotation_deg)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# init player id text?
-	#label.text = "player_id: %d" % player_id
-	spawn_along_curve(hand_size)
+	label.text = "player_id: %s" % player_id
+	bidView.OwnerID = player_id
+	if (useLegacyCardFan): 
+		spawn_along_curve(hand_size)
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func get_hand_size() -> int:
-	return hand.size()
+	return hand_size
 	
 func reveal_hand() -> void:
 	pass
@@ -81,7 +87,6 @@ func spawn_along_curve(count: int) -> void:
 		instance.position = top_left_position
 		instance.scale = Vector2(cardscale, cardscale)
 		instance.rotation = target_rotation 
-		instance.z_index = 2
 		add_child(instance)
 		
 # Helper function to sample the curve's Y value at a specific X coordinate

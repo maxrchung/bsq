@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="1_766oo"]
 [ext_resource type="Script" uid="uid://cod47o4arki83" path="res://staging/player_controller.gd" id="1_ru61t"]
+[ext_resource type="Script" uid="uid://cpbc15rl8v8hb" path="res://scripts/TableController.gd" id="2_5c5ks"]
 [ext_resource type="AudioStream" uid="uid://dq7iqjj05ieqw" path="res://assets/sounds/Click_stereo.ogg.mp3" id="3_5c5ks"]
-[ext_resource type="Script" uid="uid://cpbc15rl8v8hb" path="res://scripts/table_controller.gd" id="2_5c5ks"]
 [ext_resource type="Script" uid="uid://bbeffmus5r6m1" path="res://staging/player_infos.gd" id="3_8y7d7"]
 [ext_resource type="PackedScene" uid="uid://dx6kxaydpudjl" path="res://player_info.tscn" id="4_6rarn"]
 [ext_resource type="PackedScene" uid="uid://bg6hoi1sxwl2v" path="res://hand.tscn" id="5_jkla0"]
@@ -35,9 +35,8 @@ nameField = NodePath("../LobbyStuff/LineEdit")
 joinButton = NodePath("../LobbyStuff/Button")
 lobbyList = NodePath("../LobbyStuff/ItemList")
 
-[node name="Table" type="Node2D" parent="." unique_id=574531059 node_paths=PackedStringArray("spawn_path")]
+[node name="Table" type="Node2D" parent="." unique_id=574531059]
 script = ExtResource("2_5c5ks")
-spawn_path = NodePath("SpawnPath")
 
 [node name="SpawnPath" type="Path2D" parent="Table" unique_id=1862568266]
 position = Vector2(-0.00012207031, -767.0001)

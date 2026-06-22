@@ -166,12 +166,10 @@ func _handle_rsp(text: String) -> void:
 				
 	if "gameStateUpdateEvent" in d:
 		var roundNumber: int = int(d.gameStateUpdateEvent.currentRound.roundNumber)
-		var activePlayerCount: int = d.gameStateUpdateEvent.activePlayers.size()
 		$"../RoundNumberLabel".text = "Rounds left: " + str(7 -roundNumber)
-		print("activePlayerCount %d" % activePlayerCount)
 		if roundNumber == 1:
 			# Game just started, init other players
-			$"../Table".init_table(activePlayerCount)
+			$"../Table".init_table(myPlayerId, d.gameStateUpdateEvent.players)
 	
 				
 	if "currentPlayer" in d:
