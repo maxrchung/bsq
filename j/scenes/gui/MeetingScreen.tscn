@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cghpwjo0rnnyq"]
 
 [ext_resource type="PackedScene" uid="uid://4lycixra0wpo" path="res://objects/gui/BidView.tscn" id="1_24fj3"]
+[ext_resource type="Script" uid="uid://d5qroadnmac2" path="res://scenes/gui/MeetingScreen.gd" id="1_ekpfp"]
 
 [node name="MeetingScreen" type="Control" unique_id=1158891409]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ekpfp")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1610124733]
 layout_mode = 1
@@ -71,4 +73,3 @@ grow_vertical = 2
 
 [node name="BidView" parent="BidContainer" unique_id=1375384170 instance=ExtResource("1_24fj3")]
 layout_mode = 2
-theme_override_constants/separation = 10

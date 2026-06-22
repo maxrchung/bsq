@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://b1hp2hkdhv8vv"]
+
+[ext_resource type="LabelSettings" uid="uid://dogmbrtdjuv0o" path="res://properties/TitleLabel.tres" id="1_idljb"]
+[ext_resource type="Script" uid="uid://bgr0crlfrye5x" path="res://scenes/gui/LobbyScene.gd" id="1_v0jgi"]
+[ext_resource type="Script" uid="uid://cwi0ud5pp5a2c" path="res://scenes/gui/LobbyPlayerList.gd" id="3_hgjdt"]
+
+[node name="LobbyScene" type="Control" unique_id=1768402689]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v0jgi")
+
+[node name="Titlebar" type="PanelContainer" parent="." unique_id=27307102]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 62.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Titlebar" unique_id=1151790641]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Titlebar/MarginContainer" unique_id=1423533817]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+
+[node name="LeaveButton" type="Button" parent="Titlebar/MarginContainer/Control" unique_id=1800950806]
+layout_mode = 1
+offset_right = 62.0
+offset_bottom = 62.0
+text = "<-"
+
+[node name="LobbyTitle" type="Label" parent="Titlebar/MarginContainer/Control" unique_id=988184433]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "%S"
+label_settings = ExtResource("1_idljb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SidePanel" type="PanelContainer" parent="." unique_id=1016755408]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -147.0
+offset_right = 249.0
+offset_bottom = 147.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="SidePanel" unique_id=897372231]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SidePanel/MarginContainer" unique_id=278620961]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SidePanel/MarginContainer/VBoxContainer" unique_id=1050680838]
+layout_mode = 2
+text = "players"
+
+[node name="PlayerScroll" type="ScrollContainer" parent="SidePanel/MarginContainer/VBoxContainer" unique_id=1911823073]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerPanel" type="PanelContainer" parent="SidePanel/MarginContainer/VBoxContainer/PlayerScroll" unique_id=1605018807]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerMargins" type="MarginContainer" parent="SidePanel/MarginContainer/VBoxContainer/PlayerScroll/PlayerPanel" unique_id=148425300]
+layout_mode = 2
+
+[node name="PlayerList" type="VBoxContainer" parent="SidePanel/MarginContainer/VBoxContainer/PlayerScroll/PlayerPanel/PlayerMargins" unique_id=767503740]
+layout_mode = 2
+script = ExtResource("3_hgjdt")
+
+[node name="BottomContainer" type="HBoxContainer" parent="." unique_id=1632681673]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -172.0
+offset_top = -70.0
+offset_right = 172.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomContainer" unique_id=951288327]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="BottomContainer/MarginContainer" unique_id=151103146]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+disabled = true
+text = "START GAME"

@@ -17,7 +17,7 @@ public interface IRpcListener
 
     public ValueTask<OkResponse> JoinLobbyAsync(Guid lobbyId, string playerName);
 
-    public ValueTask<OkResponse> CreateLobbyAsync(string playerName);
+    public ValueTask<Guid> CreateLobbyAsync(string lobbyName);
 
     public ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type);
 
@@ -50,7 +50,8 @@ public class RpcPipe
         }
         else if (req.Create != null)
         {
-            rsp.Ok = await _server.CreateLobbyAsync(req.Create.PlayerName);
+            var newId = await _server.CreateLobbyAsync(req.Create.PlayerName);
+            rsp.LobbyList = new LobbyListResponse { Lobbies = await _server.GetLobbyListAsync(), JustCreated = newId };
         }
         else if (req.Join != null)
         {
@@ -60,7 +61,7 @@ public class RpcPipe
         {
             if (req.GetInfo == GetInfoType.Lobbies)
             {
-                rsp.LobbyList = await _server.GetLobbyListAsync();
+                rsp.LobbyList = new LobbyListResponse { Lobbies = await _server.GetLobbyListAsync() };
             }
             else
             {

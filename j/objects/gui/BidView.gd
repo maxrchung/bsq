@@ -1,6 +1,29 @@
 @tool
 extends HBoxContainer
 
+const CARD_PREFAB = preload("res://objects/PlayingCard.tscn")
+const CARD_BASE_SIZE := Vector2(125, 175)
+const NORMAL_SEPARATION := 10
+const STACKED_SEPARATION := -100
+
+var hand = [[PlayingCard.SuitName.Spade, 6], [PlayingCard.SuitName.Heart, 7]]
+
+const CARD_VALUE_MAP = {
+	"Two": 2,
+	"Three": 3,
+	"Four": 4,
+	"Five": 5,
+	"Six": 6,
+	"Seven": 7,
+	"Eight": 8,
+	"Nine": 9,
+	"Ten": 10,
+	"Jack": 11,
+	"Queen": 12,
+	"King": 13,
+	"Ace": 14
+}
+
 @export var show_stacked: bool = false:
 	set(v):
 		show_stacked = v
@@ -11,15 +34,51 @@ extends HBoxContainer
 		face_up = v
 		_update_layout()
 
+@export var card_scale: float = 1.0:
+	set(v):
+		card_scale = v
+		_update_layout()
+		for child in get_children():
+			if child is PlayingCard:
+				_apply_card_layout(child)
+		queue_sort()
+		update_minimum_size()
+
+func set_hand(new_hand):
+	hand.clear()
+	for card in new_hand:
+		hand.append([PlayingCard.SuitName[card["suit"]], CARD_VALUE_MAP[card["value"]]])
+	_update_hand()
+
 func _update_layout():
-	self.add_theme_constant_override("separation", -100 if show_stacked else 10)
+	self.add_theme_constant_override("separation", int(STACKED_SEPARATION * card_scale) if show_stacked else NORMAL_SEPARATION)
 	for child in get_children():
 		if child is PlayingCard:
 			child.face_up = face_up
+	queue_sort()
+	update_minimum_size()
+
+func _apply_card_layout(card: PlayingCard):
+	card.custom_minimum_size = CARD_BASE_SIZE * card_scale
+
+func _update_hand():
+	for child in get_children():
+		if child is PlayingCard:
+			child.queue_free()
+	for card in hand:
+		var card_instance = CARD_PREFAB.instantiate() as PlayingCard
+		card_instance.suit = card[0]
+		card_instance.value = card[1]
+		card_instance.face_up = face_up
+		_apply_card_layout(card_instance)
+		add_child(card_instance)
+	queue_sort()
+	update_minimum_size()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_update_layout()
+	_update_hand()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -12,9 +12,14 @@ config_version=5
 
 config/name="bs?"
 config/description="B.S. Poker meets Among We"
-run/main_scene="uid://bcqs1n284i0kq"
+run/main_scene="uid://1uocdd4df1o7"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+ServerConnection="*uid://mbdi6nr3r1vh"
+StateManager="*uid://5pku5p33ydbe"
 
 [display]
 
@@ -31,7 +36,7 @@ enabled=PackedStringArray()
 
 [gui]
 
-theme/custom_font="uid://b7hn1sf4gok88"
+theme/custom="uid://b4ukfglkh6u2n"
 
 [input]
 

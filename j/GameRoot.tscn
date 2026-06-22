@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://1uocdd4df1o7"]
+
+[ext_resource type="Script" uid="uid://3fknmy5owdjy" path="res://GameRoot.gd" id="1_8pgip"]
+[ext_resource type="Texture2D" uid="uid://ckla2viltl287" path="res://mj/table.png" id="1_sk6ly"]
+[ext_resource type="PackedScene" uid="uid://daww7tuxxsbrc" path="res://scenes/gui/MenuScene.tscn" id="2_nbt2s"]
+[ext_resource type="PackedScene" uid="uid://dx8bmt68rcahb" path="res://scenes/gui/RoundScreen.tscn" id="3_7kk1n"]
+[ext_resource type="PackedScene" uid="uid://b1hp2hkdhv8vv" path="res://scenes/gui/LobbyScene.tscn" id="3_hirbl"]
+
+[node name="GameRoot" type="Node2D" unique_id=27206018]
+script = ExtResource("1_8pgip")
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=1036396582]
+layer = 0
+
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=330664846]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.22290233, 0.31866792, 0.25931147, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Background" unique_id=329602194]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -648.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_sk6ly")
+
+[node name="BaseScenes" type="CanvasLayer" parent="." unique_id=400343054]
+
+[node name="MenuScene" parent="BaseScenes" unique_id=798910656 instance=ExtResource("2_nbt2s")]
+
+[node name="LobbyScene" parent="BaseScenes" unique_id=1768402689 instance=ExtResource("3_hirbl")]
+visible = false
+
+[node name="RoundScreen" parent="BaseScenes" unique_id=1006311977 instance=ExtResource("3_7kk1n")]
+visible = false

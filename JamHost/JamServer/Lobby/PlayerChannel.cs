@@ -81,7 +81,7 @@ public class PlayerChannel : IRpcListener
         return new OkResponse { Message = "joined" };
     }
 
-    public async ValueTask<OkResponse> CreateLobbyAsync(string playerName)
+    public async ValueTask<Guid> CreateLobbyAsync(string playerName)
     {
         if (_lobbyPlayer != null)
         {
@@ -91,17 +91,19 @@ public class PlayerChannel : IRpcListener
         _name = playerName;
 
         var lobby = _coordinator.CreateLobby(playerName + " :)");
-        _lobbyPlayer = await lobby.BindPlayer(playerName, this);
-        return new OkResponse { Message = "created" };
+        return lobby.Id;
     }
 
-    public async ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards) {
+    public async ValueTask<OkResponse> AcceptBidAsync(List<Dictionary<string, string>> cards)
+    {
         var lobby = _lobbyPlayer.Lobby;
         var validated = await lobby.ValidateBid(cards);
-        if (!validated) {
+        if (!validated)
+        {
             return new OkResponse { Message = "Invalid bid" };
         }
-        return new OkResponse{ Message = "Valid bid" };
+
+        return new OkResponse { Message = "Valid bid" };
     }
 
     public async ValueTask<OkResponse> InvokeCtlAsync(InvokeCtlType type)

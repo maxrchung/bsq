@@ -82,13 +82,19 @@ public record GameStateUpdateEvent
 
 }
 
+public record LobbyListResponse
+{
+    public required IReadOnlyList<LobbyListEntry> Lobbies { get; init; }
+    public Guid? JustCreated { get; init; } = null;
+}
+
 public record RpcResponse
 {
     public required int Id { get; init; }
 
     public OkResponse? Ok { get; set; }
 
-    public IReadOnlyList<LobbyListEntry>? LobbyList { get; set; }
+    public LobbyListResponse? LobbyList { get; set; }
 
     public LobbyChangeMessage? LobbyChange { get; set; }
 

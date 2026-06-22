@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://daww7tuxxsbrc"]
+
+[ext_resource type="Script" uid="uid://bct2ik04om1yn" path="res://scenes/gui/MenuScene.gd" id="1_8ehqy"]
+[ext_resource type="LabelSettings" uid="uid://dogmbrtdjuv0o" path="res://properties/TitleLabel.tres" id="3_ilsfx"]
+
+[node name="MenuScene" type="Control" unique_id=798910656]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ehqy")
+
+[node name="HelpPanel" type="PanelContainer" parent="." unique_id=1972326512]
+visible = false
+custom_minimum_size = Vector2(0, 350)
+custom_maximum_size = Vector2(700, 600)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -169.5
+offset_bottom = 169.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HelpPanel" unique_id=270604648]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HelpPanel/MarginContainer" unique_id=901662631]
+layout_mode = 2
+text = "BS Poker is a bluffing game where you deal cards and try to guess the highest scoring combination.
+You call BS when you think a hand doesn't exist.
+
+Priority
+- Royal flush
+- Striaght flush
+- Four of a kind
+- Full house
+- Flush
+- Straight
+- Three of a kind
+- Two pair
+- Pair
+- High card"
+fit_content = true
+
+[node name="Titlebar" type="PanelContainer" parent="." unique_id=728639482]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 94.0
+grow_horizontal = 2
+
+[node name="TitleMargin" type="MarginContainer" parent="Titlebar" unique_id=639564167]
+layout_mode = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="Titlebar/TitleMargin" unique_id=1022827374]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Titlebar/TitleMargin/TitleContainer" unique_id=241992111]
+layout_mode = 2
+text = "bs"
+label_settings = ExtResource("3_ilsfx")
+horizontal_alignment = 2
+
+[node name="HelpButton" type="Button" parent="Titlebar/TitleMargin/TitleContainer" unique_id=74969495]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "?"
+
+[node name="ConnectingContainer" type="HBoxContainer" parent="." unique_id=190507706]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ConnectingContainer" unique_id=442974213]
+layout_mode = 2
+text = "connecting..."
+label_settings = ExtResource("3_ilsfx")
+
+[node name="ConnectionTabs" type="TabContainer" parent="." unique_id=87924707]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.25
+offset_top = -137.5
+offset_right = 235.25
+offset_bottom = 137.5
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 1
+tab_0/title = "Join"
+tab_1/title = "Create"
+
+[node name="JoinContainer" type="MarginContainer" parent="ConnectionTabs" unique_id=985423122]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "Join"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionTabs/JoinContainer" unique_id=1218066165]
+layout_mode = 2
+
+[node name="LobbyTopContainer" type="HBoxContainer" parent="ConnectionTabs/JoinContainer/VBoxContainer" unique_id=1418376486]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ConnectionTabs/JoinContainer/VBoxContainer/LobbyTopContainer" unique_id=428753693]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Lobbies"
+
+[node name="Button" type="Button" parent="ConnectionTabs/JoinContainer/VBoxContainer/LobbyTopContainer" unique_id=1674510890]
+layout_mode = 2
+text = "REFRESH"
+
+[node name="LobbyList" type="ItemList" parent="ConnectionTabs/JoinContainer/VBoxContainer" unique_id=586617272]
+layout_mode = 2
+size_flags_vertical = 3
+auto_width = true
+auto_height = true
+item_count = 1
+item_0/text = "LOADING..."
+item_0/selectable = false
+item_0/disabled = true
+
+[node name="LobbyBottomContainer" type="HBoxContainer" parent="ConnectionTabs/JoinContainer/VBoxContainer" unique_id=1926009221]
+layout_mode = 2
+
+[node name="PlayerName" type="LineEdit" parent="ConnectionTabs/JoinContainer/VBoxContainer/LobbyBottomContainer" unique_id=1188557404]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "NAME"
+
+[node name="JoinButton" type="Button" parent="ConnectionTabs/JoinContainer/VBoxContainer/LobbyBottomContainer" unique_id=122110405]
+layout_mode = 2
+disabled = true
+text = "JOIN"
+
+[node name="CreateContainer" type="MarginContainer" parent="ConnectionTabs" unique_id=1674189123]
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "Create"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionTabs/CreateContainer" unique_id=97216258]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectionTabs/CreateContainer/VBoxContainer" unique_id=1938840164]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Label" type="Label" parent="ConnectionTabs/CreateContainer/VBoxContainer/VBoxContainer" unique_id=1932620914]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "why not make a nice lobby for you and your friends :)"
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ConnectionTabs/CreateContainer/VBoxContainer" unique_id=2044046352]
+layout_mode = 2
+
+[node name="LobbyNameInput" type="LineEdit" parent="ConnectionTabs/CreateContainer/VBoxContainer/HBoxContainer" unique_id=2060077103]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "LOBBY NAME"
+
+[node name="LobbyCreateButton" type="Button" parent="ConnectionTabs/CreateContainer/VBoxContainer/HBoxContainer" unique_id=1586417636]
+layout_mode = 2
+disabled = true
+text = "CREATE"
