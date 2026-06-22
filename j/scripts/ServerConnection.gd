@@ -48,21 +48,37 @@ class RpcCard:
 		value = obj.get("value")
 		face_up = true
 
+class RpcHand:
+	var cards: Array[RpcCard]
+
+	func _init(obj: Array):
+		cards = []
+		for c in obj:
+			cards.append(RpcCard.new(c))
+
 class PlayerHands:
-	var hands: Dictionary[String, Array] = {}
+	var hands: Dictionary[String, RpcHand] = {}
 
 	func _init(obj: Array):
 		hands = {}
 		for p in obj:
 			var id = p.get("id")
-			var cards = []
-			for c in p.get("cards", []):
-				cards.append(RpcCard.new(c))
-			for i in range(p.cardCount - cards.size()):
+			var hand = RpcHand.new(p.get("cards", []))
+			for i in range(p.cardCount - hand.cards.size()):
 				var fakeCard = RpcCard.new({"suit": "Spade", "value": "Two"})
 				fakeCard.face_up = false
-				cards.append(fakeCard)
-			hands[id] = cards
+				hand.cards.append(fakeCard)
+			hands[id] = hand
+
+class EmergencyMeetingInfo:
+	var active: bool
+	var votes_for: Array[String]
+	var votes_against: Array[String]
+
+	func _init(obj: Dictionary):
+		active = obj.get("active")
+		votes_for = obj.get("votesFor")
+		votes_against = obj.get("votesAgainst")
 
 # signals
 signal connection_state_changed(new_state: ConnectionState)
@@ -70,6 +86,8 @@ signal lobby_list_updated(lobbies: Array[LobbyEntry])
 signal lobby_info_updated(info: LobbyInfo)
 signal hands_updated(hands: PlayerHands)
 signal player_id_updated(player_id: String)
+signal emergency_meeting_updated(info: EmergencyMeetingInfo)
+signal bid_changed(bid: RpcHand)
 
 # publics
 var CurrentPlayerID: String = ""
@@ -157,13 +175,23 @@ func _handle_msg(text: String) -> void:
 	
 	if "playerHands" in d:
 		_parse_player_hands(d["playerHands"])
+
+	if "emergencyMeeting" in d:
+		var meetingInfo = EmergencyMeetingInfo.new(d["emergencyMeeting"])
+		if meetingInfo.active:
+			StateManager.change_state(StateMgr.GameStateT.EmergencyMeeting)
+		emergency_meeting_updated.emit(meetingInfo)
+	
+	if "bid" in d:
+		var bid = RpcHand.new(d["bid"])
+		bid_changed.emit(bid)
 	
 func _state_change(new_state: ConnectionState) -> void:
 	if new_state == ConnectionState.Connected:
 		_on_connect()
 
 func _ready() -> void:
-	var DEFAULT_HOST = "ws://localhost:5092/" if OS.is_debug_build() else "wss://example.com/"
+	var DEFAULT_HOST = "ws://localhost:5092/" if OS.is_debug_build() else "wss://bsq.up.railway.app/"
 	ws_connect(DEFAULT_HOST + "api/v1/game/socket")
 	connection_state_changed.connect(_state_change)
 

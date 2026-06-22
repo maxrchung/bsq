@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://daww7tuxxsbrc" path="res://scenes/gui/MenuScene.tscn" id="2_nbt2s"]
 [ext_resource type="PackedScene" uid="uid://dx8bmt68rcahb" path="res://scenes/gui/RoundScreen.tscn" id="3_7kk1n"]
 [ext_resource type="PackedScene" uid="uid://b1hp2hkdhv8vv" path="res://scenes/gui/LobbyScene.tscn" id="3_hirbl"]
+[ext_resource type="PackedScene" uid="uid://cghpwjo0rnnyq" path="res://scenes/gui/MeetingScreen.tscn" id="6_drpm8"]
 
 [node name="GameRoot" type="Node2D" unique_id=27206018]
 script = ExtResource("1_8pgip")
@@ -33,9 +34,13 @@ texture = ExtResource("1_sk6ly")
 [node name="BaseScenes" type="CanvasLayer" parent="." unique_id=400343054]
 
 [node name="MenuScene" parent="BaseScenes" unique_id=798910656 instance=ExtResource("2_nbt2s")]
+visible = false
 
 [node name="LobbyScene" parent="BaseScenes" unique_id=1768402689 instance=ExtResource("3_hirbl")]
 visible = false
 
 [node name="RoundScreen" parent="BaseScenes" unique_id=1006311977 instance=ExtResource("3_7kk1n")]
+visible = false
+
+[node name="MeetingScreen" parent="BaseScenes" unique_id=1158891409 instance=ExtResource("6_drpm8")]
 visible = false

@@ -25,6 +25,7 @@ grow_vertical = 0
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, 225)
 theme_override_constants/separation = -200
+OwnerID = "$SELF"
 show_stacked = true
 card_scale = 2.0
 

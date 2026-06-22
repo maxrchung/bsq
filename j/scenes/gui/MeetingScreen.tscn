@@ -73,3 +73,5 @@ grow_vertical = 2
 
 [node name="BidView" parent="BidContainer" unique_id=1375384170 instance=ExtResource("1_24fj3")]
 layout_mode = 2
+OwnerID = "$BID"
+card_scale = 1.5

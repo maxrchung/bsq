@@ -10,7 +10,7 @@ const STACKED_SEPARATION := -100
 
 var hand = [[PlayingCard.SuitName.Spade, 6, true], [PlayingCard.SuitName.Heart, 7, true]]
 
-var OwnerID: String = ""
+@export var OwnerID: String = ""
 
 const CARD_VALUE_MAP = {
 	"Two": 2,
@@ -73,17 +73,20 @@ func _update_hand():
 	update_minimum_size()
 
 func _handle_update(hands: SrvCxn.PlayerHands):
-	if OwnerID in hands.hands:
-		var new_hand = hands.hands[OwnerID]
-		set_hand(new_hand)
+	var effectiveId = OwnerID
+	if effectiveId == "$SELF":
+		effectiveId = ServerConnection.CurrentPlayerID
+	if effectiveId in hands.hands:
+		var new_hand = hands.hands[effectiveId]
+		set_hand(new_hand.cards)
+
+func _handle_bid_update(bid: SrvCxn.RpcHand):
+	if OwnerID == "$BID":
+		set_hand(bid.cards)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_update_layout()
 	_update_hand()
 	ServerConnection.hands_updated.connect(_handle_update)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+	ServerConnection.bid_changed.connect(_handle_bid_update)
