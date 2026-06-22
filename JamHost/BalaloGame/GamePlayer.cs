@@ -35,5 +35,8 @@ public class GamePlayer
 
     public void DecreasePoints(int points) {
         Score -= points;
+        if (Score < 0) {
+            Score = 0;
+        }
     }
 }

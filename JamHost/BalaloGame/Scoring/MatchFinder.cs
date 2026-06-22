@@ -125,6 +125,35 @@ public class EffectiveHand
         return straight;
     }
 
+    public EffectiveHand? TryForceFullHouse() {
+        if (!IsFullHand) return null;
+        var uniqueValues = new Dictionary<CardValue, int>();
+        foreach (var card in _cards) {
+            var cardValue = card.Value;
+            if (!cardValue.IsConcrete()) {
+                continue;
+            }
+            if (uniqueValues.Keys.Contains(cardValue)) {
+                uniqueValues[cardValue] += 1;
+            } else {
+                uniqueValues.Add(cardValue, 1);
+            }
+        }
+        if (uniqueValues.Keys.Count != 2) return null;
+        var firstValueCount = uniqueValues[uniqueValues.Keys.First()];
+        var secondValueCount = uniqueValues[uniqueValues.Keys.Last()];
+        if ((firstValueCount != 3 || secondValueCount != 2) && (firstValueCount != 2 || secondValueCount != 3)) return null;
+
+        var fullHouse = Clone();
+        var targetOne = uniqueValues.Keys.First();
+        var targetTwo = uniqueValues.Keys.Last();
+        for (var i = 0; i < Size; i++) {
+            if (!fullHouse.TryTakeOf(targetOne) && !fullHouse.TryTakeOf(targetTwo)) return null;
+        }
+
+        return fullHouse;
+    }
+
     public EffectiveHand? TryForceFlush()
     {
         if (!IsFullHand) return null;
@@ -195,6 +224,7 @@ public static class MatchFinder
         var maybeStraight = hand.TryForceStraight();
         var maybeFlush = hand.TryForceFlush();
         var maybeStraightFlush = TryStraightFlush(maybeStraight, maybeFlush);
+        var maybeFullHouse = hand.TryForceFullHouse();
 
         var ofAKindList = hand.GetNOfAKind();
         var highestOfAKind = ofAKindList.FirstOrDefault()?.Size ?? 0;
@@ -217,7 +247,9 @@ public static class MatchFinder
             return ofAKindList.First().BuildCardResult(ScoringType.FourOfAKind, force=force);
         }
 
-        // TODO: full house
+        if (maybeFullHouse != null) {
+            return maybeFullHouse.BuildCardResult(ScoringType.FullHouse, force=force);
+        }
         if (maybeFlush != null)
         {
             return maybeFlush.BuildCardResult(ScoringType.Flush, force=force);

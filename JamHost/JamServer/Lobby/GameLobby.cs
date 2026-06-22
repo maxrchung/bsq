@@ -1,5 +1,6 @@
 using BalaloGame;
 using JamServer.RPC;
+using BalaloGame.Scoring;
 
 namespace JamServer.Lobby;
 
@@ -230,6 +231,7 @@ public class GameLobby
                 bid.Add(new_card);
             }
         }
+
         if (_board.ValidateBid(bid))
         {
             _board.SetBid(bid);
