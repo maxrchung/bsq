@@ -30,3 +30,5 @@ func _on_meeting_change(info: SrvCxn.EmergencyMeetingInfo) -> void:
 func _ready() -> void:
 	_set_enabled(false)
 	ServerConnection.emergency_meeting_updated.connect(_on_meeting_change)
+	FakeAction.pressed.connect(_on_fake_pressed)
+	RealAction.pressed.connect(_on_real_pressed)

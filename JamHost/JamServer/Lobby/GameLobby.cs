@@ -237,6 +237,7 @@ public class GameLobby
 
     public async Task<bool> ValidateBid(List<RequestCard> rawBid)
     {
+        if (rawBid.Count < 1) return false;
         var bid = rawBid.Select(x => new Card(x.Value, x.Suit)).ToList();
 
         if (_board.ValidateBid(bid))
