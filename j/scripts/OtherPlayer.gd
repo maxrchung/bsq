@@ -8,7 +8,7 @@ var hand_size: int
 var useLegacyCardFan: bool = false
 const PLAYING_CARD_SCENE = preload("res://objects/PlayingCard.tscn")
 
-@onready var label: RichTextLabel = $Sprite2D/RichTextLabel
+@onready var label: RichTextLabel = $RichTextLabel
 @onready var spawnPath: Path2D = $SpawnPath
 @onready var bidView: BidView = $BidView
 

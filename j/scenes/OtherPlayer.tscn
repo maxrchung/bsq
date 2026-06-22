@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bw11fl2frbnc"]
 
 [ext_resource type="Script" uid="uid://dx0qrtoraff6f" path="res://scripts/OtherPlayer.gd" id="1_0tb8b"]
-[ext_resource type="Texture2D" uid="uid://df22lta0ax7s" path="res://assets/tmp_player.jpg" id="1_tvnyp"]
+[ext_resource type="Texture2D" uid="uid://dsfbaixb2jhdf" path="res://assets/new-player-low.png" id="2_5fsh5"]
 [ext_resource type="Script" uid="uid://c6baib6hv58yp" path="res://objects/gui/BidView.gd" id="3_5fsh5"]
 
 [sub_resource type="Curve2D" id="Curve2D_0tb8b"]
@@ -15,21 +15,21 @@ script = ExtResource("1_0tb8b")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1244800945]
 z_index = -1
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_tvnyp")
+texture_filter = 1
+texture = ExtResource("2_5fsh5")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Sprite2D" unique_id=1808553593]
-custom_minimum_size = Vector2(400, 100)
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1808553593]
+custom_minimum_size = Vector2(80, 20)
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -438.5
-offset_top = -329.99997
-offset_right = -38.5
-offset_bottom = -229.99997
+offset_left = -78.0
+offset_top = -88.0
+offset_right = 78.0
+offset_bottom = -62.0
 grow_horizontal = 2
 theme_override_colors/default_color = Color(0.13725491, 0.40392157, 1, 1)
-theme_override_font_sizes/normal_font_size = 60
+theme_override_font_sizes/normal_font_size = 20
 text = "hi im player"
 fit_content = true
 autowrap_mode = 0
