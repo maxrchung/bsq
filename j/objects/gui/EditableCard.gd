@@ -8,7 +8,7 @@ class_name EditableCard
 		is_editable = v
 		CardMenu.visible = v
 
-var _suit_inner: PlayingCard.SuitName = PlayingCard.SuitName.Special
+var _suit_inner: PlayingCard.SuitName = PlayingCard.SuitName.None
 var _value_inner: int = 1
 var _was_ready: bool = false
 
@@ -52,7 +52,7 @@ func _get_value_idx():
 
 const _SUIT_MAP = {
 	PlayingCard.SuitName.None: "FullBlank",
-	PlayingCard.SuitName.Special: "QuestionSuit",
+	PlayingCard.SuitName.Special: "FullBlank",
 	PlayingCard.SuitName.Spade: "JustSpade",
 	PlayingCard.SuitName.Heart: "JustHeart",
 	PlayingCard.SuitName.Club: "JustClub",

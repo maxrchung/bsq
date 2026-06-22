@@ -59,7 +59,7 @@ func update_card(card: EditableCard, msg: SrvCxn.RpcCard) -> void:
 	card.value = BidView.CARD_VALUE_MAP[msg.value]
 
 func blank_card(card: EditableCard) -> void:
-	card.suit = PlayingCard.SuitName.Special
+	card.suit = PlayingCard.SuitName.None
 	card.value = 1
 
 func _update_bid(bid: SrvCxn.RpcHand) -> void:
