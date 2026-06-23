@@ -29,5 +29,7 @@ public class LobbyCoordinator
         return lobby;
     }
 
-    public IEnumerable<LobbyListEntry> GetLobbies() => _lobbies.Select(x => new LobbyListEntry(x.Key, x.Value.Name));
+    public IEnumerable<LobbyListEntry> GetLobbies() =>
+        // Only return lobbies where all players are connected
+        _lobbies.Where(l => l.Value.GetPlayers().All(p => p.Channel.IsConnected)).Select(x => new LobbyListEntry(x.Key, x.Value.Name));
 }

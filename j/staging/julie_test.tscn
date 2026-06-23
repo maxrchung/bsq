@@ -154,14 +154,14 @@ visible = false
 
 [node name="BidMpregs" parent="." unique_id=176062230 instance=ExtResource("6_nh24k")]
 visible = false
-position = Vector2(266, 291)
+position = Vector2(266, 302)
 
 [node name="BidButton" type="Button" parent="." unique_id=1883378963]
 visible = false
 offset_left = 510.0
-offset_top = 376.0
+offset_top = 387.0
 offset_right = 656.0
-offset_bottom = 412.0
+offset_bottom = 423.0
 text = "Submit hand"
 
 [node name="EmergencyMeeting" parent="." unique_id=1828152688 instance=ExtResource("7_766oo")]
@@ -202,6 +202,15 @@ stream = ExtResource("10_cyny5")
 [node name="bgm_sfx" type="AudioStreamPlayer" parent="." unique_id=1802988808]
 stream = ExtResource("11_cyny5")
 autoplay = true
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1369266637]
+visible = false
+offset_left = 352.0
+offset_top = 226.0
+offset_right = 809.0
+offset_bottom = 247.0
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="LobbyStuff/CreateButton" to="PlayerController" method="_on_create_button_pressed"]
 [connection signal="pressed" from="LobbyStuff/ConnectButton" to="PlayerController" method="_on_connect_button_pressed"]

@@ -127,13 +127,6 @@ public class RpcPipe
 
     public async Task RunAsync()
     {
-        try
-        {
-            await RunAsyncInner();
-        }
-        catch (Exception e)
-        {
-            _server.OnError(e);
-        }
+        await RunAsyncInner();
     }
 }

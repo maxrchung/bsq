@@ -1,5 +1,6 @@
-using System.Net.WebSockets;
 using JamServer.RPC;
+using Microsoft.AspNetCore.Hosting.Server;
+using System.Net.WebSockets;
 
 namespace JamServer.Lobby;
 
@@ -13,6 +14,8 @@ public class PlayerChannel : IRpcListener
 
     public string Name => _name;
 
+    public bool IsConnected { get; set; } = true;
+
     public Task Send(RpcResponse msg) => _pipe.Send(msg);
 
     public PlayerChannel(IServiceProvider services, WebSocket socket)
@@ -24,7 +27,15 @@ public class PlayerChannel : IRpcListener
 
     public async Task RunAsync()
     {
-        await _pipe.RunAsync();
+        try
+        {
+            await _pipe.RunAsync();
+        }
+        catch (Exception e)
+        {
+            IsConnected = false;
+            OnError(e);
+        }
     }
 
 

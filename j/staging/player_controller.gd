@@ -166,7 +166,7 @@ func _handle_rsp(text: String) -> void:
 				
 	if "gameStateUpdateEvent" in d:
 		var roundNumber: int = int(d.gameStateUpdateEvent.currentRound.roundNumber)
-		$"../RoundNumberLabel".text = "Rounds left: " + str(7 -roundNumber)
+		$"../RoundNumberLabel".text = "Rounds left: " + str(10 -roundNumber)
 				
 	if "currentPlayer" in d:
 		currentPlayer = d.currentPlayer
@@ -190,14 +190,30 @@ func _handle_rsp(text: String) -> void:
 		bidPlayer = d.bidPlayer
 		$"../EmergencyMeeting".update_button(myPlayerId, bidPlayer)
 		
+	if "ok" in d:
+		if d.ok.message == "Invalid bid":
+			$"../StatusLabel".visible = true
+			$"../StatusLabel".text = "Hand score too low"
+		elif d.ok.message == "It was BS":
+			$"../StatusLabel".visible = true
+			$"../StatusLabel".text = d.ok.message
+		elif d.ok.message == "It was not BS":
+			$"../StatusLabel".visible = true
+			$"../StatusLabel".text = d.ok.message
+		
 	if "bid" in d:
 		var bid = d.bid
 		$"../BidMpregs".set_cards(bid)
+		$"../StatusLabel".visible = false
 		
 	if "emergencyMeeting" in d:
 		$"../EmergencyMeeting".update_state(myPlayerId, bidPlayer, d.emergencyMeeting)
 		$"../BidButton".visible = false
 		$"../BidMpregs".enable(false)
+		$"../StatusLabel".text = "Vote for BS"
+		$"../StatusLabel".visible = true
+		
+
 
 func _process_socket() -> void:
 	
@@ -258,9 +274,12 @@ func _on_vote_against_button_pressed() -> void:
 func _on_bid_button_pressed() -> void:
 	generic_click.play()
 	var cards = $"../BidMpregs".get_cards()
+	$"../StatusLabel".visible = false
 	
 	if cards.size() == 0:
 		print("no cards, so not submitting")
+		$"../StatusLabel".visible = true
+		$"../StatusLabel".text = "Hand score too low"
 		return
 	
 	_invoke("bid", { "cards": cards } )

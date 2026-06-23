@@ -1,6 +1,7 @@
 using BalaloGame;
-using JamServer.RPC;
 using BalaloGame.Scoring;
+using JamServer.RPC;
+using System.Security.Cryptography;
 
 namespace JamServer.Lobby;
 
@@ -59,8 +60,8 @@ public class GameLobby
     private readonly EmergencyMeetingState _emergencyMeeting = new();
 
     public const int HAND_LIMIT = 67; // Setting this real high to avoid some weird die cases
-    public const int SCORE_LIMIT = 1000;
-    public const int MAX_ROUNDS = 6;
+    public const int SCORE_LIMIT = 666777; // Setting this real high to avoid some weird die cases
+    public const int MAX_ROUNDS = 9;
 
 
     public GameLobby(string name, Guid id)
@@ -170,6 +171,7 @@ public class GameLobby
         _board.NextRound();
         if (_board.RoundNumber > MAX_ROUNDS)
         {
+            await UpdateHands();
             await UpdateGameState(GameStateUpdateEvent.Type.GameOver);
         }
         else
@@ -254,6 +256,7 @@ public class GameLobby
         // if it was bs, then the person who bid starts, if it wasn't bs then the person who called the meeting starts
         GamePlayer loser = meeting_result ? _board.GetBidPlayer() : _emergencyMeeting.MeetingCaller;
         UpdatePlayers(meeting_result);
+        await UpdateMeetingResult(meeting_result);
         await UpdateGame();
         await UpdateDeck();
         await NextRound();
@@ -274,6 +277,12 @@ public class GameLobby
             Penalize(_emergencyMeeting.VotesAgainst);
             Reward(_emergencyMeeting.VotesFor);
         }
+    }
+
+    public async Task UpdateMeetingResult(bool meetingResult)
+    {
+        var message = meetingResult ? "It was BS" : "It was not BS";
+        await InvokeAll(new RpcResponse { Id = 0, Ok = new OkResponse { Message = message } });
     }
 
     public async Task UpdateGame() {
