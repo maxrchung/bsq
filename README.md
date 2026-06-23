@@ -7,15 +7,14 @@ card game where you deal out a few cards to a group, then you take turns trying
 to guess the better poker hand you can complete with everyone's cards. If you
 don't think a hand exists, you call BS on it.
 
-There are a lot of house rules you can add, for example adding wild cards. In
-bs? we added a group voting system so everyone individually decides BS or not.
-We also keep track of a score depending on hand rarity and determine a winner
-after some rounds are done.
+There are a lot of house rules you can add. In our bs? we added a group voting
+system so everyone individually decides BS or not. We also keep track of a score
+depending on hand rarity and determine a winner after some rounds are done.
 
-This final version is in a bit of a weird state. The itch.io release is an
-older build with a few patches. The latest in `main` has some issues with a
-parts of the game loop. Long story short is rewriting stuff took a long time,
-and we couldn't get things fixed by the deadline.
+This final version is in a bit of a weird state. The itch.io release is an older
+build with a few patches. The latest in main has some issues with parts of the
+game loop. Long story short is rewriting stuff took a long time, and we couldn't
+get things fixed by the deadline.
 
 bs? was made over a 3 day weekend. We used Godot and GDScript for the client and
 C# for the WebSockets server.
